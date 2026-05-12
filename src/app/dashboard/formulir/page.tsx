@@ -50,7 +50,7 @@ export default function FormulirPage() {
 
           {renderStepIndicator()}
 
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             {/* STEP 1: Biodata */}
             {currentStep === 1 && (
               <div className="animate-in fade-in slide-in-from-right-4 duration-300">

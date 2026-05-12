@@ -35,11 +35,35 @@ export default function DashboardPage() {
         try {
           const docRef = doc(db, "applicants", user.uid);
           const docSnap = await getDoc(docRef);
+          
           if (docSnap.exists()) {
             setRegistrationNumber(docSnap.data().registrationNumber);
+          } else {
+            // Self-healing: Jika dokumen pendaftar belum ada (karena error rules sebelumnya), buatkan otomatis
+            const { setDoc } = await import("firebase/firestore");
+            const newRegNum = `PMB${new Date().getFullYear()}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;
+            
+            await setDoc(doc(db, "applicants", user.uid), {
+              uid: user.uid,
+              registrationNumber: newRegNum,
+              status: "draft",
+              progress: { biodata: false, dokumen: false, pembayaran: false }
+            });
+            
+            // Juga buat dokumen users jika hilang
+            await setDoc(doc(db, "users", user.uid), {
+              uid: user.uid,
+              name: user.displayName || user.email?.split('@')[0] || "Peserta",
+              email: user.email,
+              role: "applicant",
+              createdAt: new Date()
+            }, { merge: true });
+            
+            setRegistrationNumber(newRegNum);
           }
         } catch (error) {
           console.error("Error fetching applicant data:", error);
+          setRegistrationNumber("Gagal memuat");
         }
       }
     };
@@ -59,7 +83,7 @@ export default function DashboardPage() {
     return <div className="min-h-screen flex items-center justify-center">Memuat...</div>;
   }
 
-  const applicantName = userData?.name || user.email?.split('@')[0] || "Peserta";
+  const applicantName = user.displayName || userData?.name || user.email?.split('@')[0] || "Peserta";
   
   const steps = [
     { id: 1, name: 'Biodata', status: 'completed', icon: FileText, href: '/dashboard/formulir' },
