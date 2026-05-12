@@ -20,6 +20,19 @@ import { auth } from "@/lib/firebase";
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const { user, userData, loading } = useAuth();
+
+  // Role-Based Access Control (RBAC) Check
+  if (!loading) {
+    if (!user) {
+      router.push("/login");
+      return null;
+    }
+    if (userData && userData.role !== 'admin') {
+      router.push("/dashboard");
+      return null;
+    }
+  }
 
   const handleLogout = async () => {
     try {
@@ -35,6 +48,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Data Pendaftar", icon: Users, href: "/admin/pendaftar" },
     // { name: "Pengaturan", icon: Settings, href: "/admin/settings" },
   ];
+
+  if (loading || !userData || userData.role !== 'admin') {
+    return <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500">Memverifikasi akses Admin...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 flex">
