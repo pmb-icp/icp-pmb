@@ -181,23 +181,29 @@ export default function ProfilPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-            <div className="flex flex-col sm:flex-row border-b border-slate-200">
+          <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+            <div className="flex flex-col sm:flex-row bg-slate-50 p-3 sm:p-4 gap-2 border-b border-slate-100">
               <button 
                 onClick={() => setActiveTab('fkip')} 
-                className={`flex-1 py-5 px-6 text-center focus:outline-none transition-all duration-300 ${activeTab === 'fkip' ? 'border-b-4 border-green-600 bg-green-50/50 text-green-800 font-bold' : 'border-b-4 border-transparent text-slate-600 hover:bg-slate-50'}`}
+                className={`flex-1 py-4 px-6 text-center focus:outline-none transition-all duration-300 rounded-2xl relative overflow-hidden ${activeTab === 'fkip' ? 'bg-gradient-to-r from-green-700 to-green-600 text-white shadow-lg transform -translate-y-1' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 hover:border-green-300'}`}
               >
-                <span className="block text-2xl mb-2">🎓</span>
-                Rumpun Kependidikan (FKIP)
-                <span className="block text-xs mt-1 font-normal opacity-70">Transformasi dari STKIP (7 Prodi)</span>
+                {activeTab === 'fkip' && <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xNSIvPjwvc3ZnPg==')] opacity-50"></div>}
+                <div className="relative z-10">
+                  <span className="block text-2xl mb-2 drop-shadow-sm">🎓</span>
+                  <span className="font-bold text-lg tracking-tight">Rumpun Kependidikan (FKIP)</span>
+                  <span className={`block text-xs mt-1 font-medium ${activeTab === 'fkip' ? 'text-green-100' : 'text-slate-500'}`}>Transformasi dari STKIP (7 Prodi)</span>
+                </div>
               </button>
               <button 
                 onClick={() => setActiveTab('hukum')} 
-                className={`flex-1 py-5 px-6 text-center focus:outline-none transition-all duration-300 ${activeTab === 'hukum' ? 'border-b-4 border-green-600 bg-green-50/50 text-green-800 font-bold' : 'border-b-4 border-transparent text-slate-600 hover:bg-slate-50'}`}
+                className={`flex-1 py-4 px-6 text-center focus:outline-none transition-all duration-300 rounded-2xl relative overflow-hidden ${activeTab === 'hukum' ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white shadow-lg transform -translate-y-1' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 hover:border-yellow-300'}`}
               >
-                <span className="block text-2xl mb-2">⚖️</span>
-                Rumpun Hukum (FH)
-                <span className="block text-xs mt-1 font-normal opacity-70">Transformasi dari STIH (1 Prodi)</span>
+                {activeTab === 'hukum' && <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xNSIvPjwvc3ZnPg==')] opacity-50"></div>}
+                <div className="relative z-10">
+                  <span className="block text-2xl mb-2 drop-shadow-sm">⚖️</span>
+                  <span className="font-bold text-lg tracking-tight">Rumpun Hukum (FH)</span>
+                  <span className={`block text-xs mt-1 font-medium ${activeTab === 'hukum' ? 'text-yellow-50' : 'text-slate-500'}`}>Transformasi dari STIH (1 Prodi)</span>
+                </div>
               </button>
             </div>
 
