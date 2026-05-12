@@ -12,7 +12,7 @@ export default function ProfilPage() {
   const [activeTab, setActiveTab] = useState<'fkip' | 'hukum'>('fkip');
   
   // Calculator State
-  const [biayaProdi, setBiayaProdi] = useState(3000000);
+  const [biayaProdi, setBiayaProdi] = useState(2500000);
   const [potonganJalur, setPotonganJalur] = useState(0);
   const [totalBiaya, setTotalBiaya] = useState(0);
   const [isCalcAnimating, setIsCalcAnimating] = useState(false);
@@ -21,8 +21,7 @@ export default function ProfilPage() {
     const calc = () => {
       setIsCalcAnimating(true);
       setTimeout(() => {
-        const biayaAwal = 1500000;
-        let total = biayaProdi + potonganJalur + biayaAwal;
+        let total = biayaProdi + potonganJalur;
         if (total < 0) total = 0;
         setTotalBiaya(total);
         setIsCalcAnimating(false);
@@ -342,8 +341,8 @@ export default function ProfilPage() {
                       className="w-full bg-emerald-800/80 border border-emerald-700/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-colors"
                     >
                       <option value={2500000}>S1 Ilmu Hukum (Reguler)</option>
-                      <option value={3500000}>S1 Ilmu Hukum (Kelas Eksekutif)</option>
-                      <option value={2000000}>S1 Rumpun Kependidikan (Semua Prodi)</option>
+                      <option value={3000000}>S1 Ilmu Hukum (Kelas Eksekutif)</option>
+                      <option value={2500000}>S1 Rumpun Kependidikan (Semua Prodi)</option>
                     </select>
                   </div>
                   <div>
@@ -367,7 +366,7 @@ export default function ProfilPage() {
                   {formatRupiah(totalBiaya)}
                 </div>
                 <p className="text-xs text-emerald-300/70 mt-4 leading-relaxed px-4">
-                  *Simulasi ini mencakup estimasi UKT semester 1 ditambah biaya awal (± Rp 1.500.000 untuk Pendaftaran, Almamater, dan PKKMB).
+                  *Berdasarkan sistem Uang Kuliah Tunggal (UKT). Sumbangan Penyelenggaraan Pendidikan (SPP) dapat diangsur sesuai kebijakan kampus.
                 </p>
                 <div className="mt-6 pt-6 border-t border-white/10">
                   <Link href="/register" className="inline-block bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg">
