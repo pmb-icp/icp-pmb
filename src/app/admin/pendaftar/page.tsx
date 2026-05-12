@@ -1,31 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Search, Filter, Eye, MoreVertical } from "lucide-react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function AdminPendaftarPage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [applicants, setApplicants] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const mockData = [
-    { id: "1", regNo: "PMB2026041", name: "Siti Aminah", phone: "081234567890", status: "Dokumen", program: "S1 Sistem Informasi", date: "12 Mei 2026" },
-    { id: "2", regNo: "PMB2026042", name: "Budi Santoso", phone: "082345678901", status: "Pembayaran", program: "S1 Teknik Informatika", date: "11 Mei 2026" },
-    { id: "3", regNo: "PMB2026043", name: "Andi Wijaya", phone: "083456789012", status: "Lulus", program: "S1 Agroteknologi", date: "10 Mei 2026" },
-    { id: "4", regNo: "PMB2026044", name: "Rina Marlina", phone: "084567890123", status: "Draft", program: "-", date: "12 Mei 2026" },
-  ];
+  useEffect(() => {
+    const fetchApplicants = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "applicants"));
+        const data = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setApplicants(data);
+      } catch (error) {
+        console.error("Error fetching applicants:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchApplicants();
+  }, []);
 
   const getStatusBadge = (status: string) => {
-    switch(status) {
-      case 'Lulus':
+    switch(status?.toLowerCase()) {
+      case 'lulus':
         return <span className="bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-medium">Lulus Verifikasi</span>;
-      case 'Pembayaran':
+      case 'pembayaran':
         return <span className="bg-blue-100 text-blue-700 px-2.5 py-1 rounded-full text-xs font-medium">Cek Pembayaran</span>;
-      case 'Dokumen':
+      case 'dokumen':
         return <span className="bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-medium">Cek Dokumen</span>;
+      case 'verifikasi':
+        return <span className="bg-purple-100 text-purple-700 px-2.5 py-1 rounded-full text-xs font-medium">Proses Verifikasi</span>;
       default:
         return <span className="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-full text-xs font-medium">Draft</span>;
     }
   };
+
+  const filteredApplicants = applicants.filter(app => 
+    app.registrationNumber?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    app.biodata?.namaLengkap?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div>
@@ -72,42 +94,56 @@ export default function AdminPendaftarPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {mockData.map((peserta) => (
-                <tr key={peserta.id} className="hover:bg-slate-50 transition">
-                  <td className="px-6 py-4">
-                    <span className="font-mono font-medium text-slate-900">{peserta.regNo}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="font-medium text-slate-900">{peserta.name}</p>
-                    <p className="text-xs text-slate-500 mt-0.5">{peserta.phone}</p>
-                  </td>
-                  <td className="px-6 py-4 text-slate-600">{peserta.program}</td>
-                  <td className="px-6 py-4 text-slate-600">{peserta.date}</td>
-                  <td className="px-6 py-4">
-                    {getStatusBadge(peserta.status)}
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center justify-center gap-2">
-                      <Link 
-                        href={`/admin/pendaftar/${peserta.id}`}
-                        className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md transition"
-                        title="Lihat Detail"
-                      >
-                        <Eye className="w-5 h-5" />
-                      </Link>
-                      <button className="p-1.5 text-slate-400 hover:bg-slate-100 rounded-md transition">
-                        <MoreVertical className="w-5 h-5" />
-                      </button>
-                    </div>
-                  </td>
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500">Memuat data...</td>
                 </tr>
-              ))}
+              ) : filteredApplicants.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500">Tidak ada data pendaftar ditemukan.</td>
+                </tr>
+              ) : (
+                filteredApplicants.map((peserta) => (
+                  <tr key={peserta.id} className="hover:bg-slate-50 transition">
+                    <td className="px-6 py-4">
+                      <span className="font-mono font-medium text-slate-900">{peserta.registrationNumber}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="font-medium text-slate-900">{peserta.biodata?.namaLengkap || 'Belum diisi'}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">{peserta.biodata?.nik || '-'}</p>
+                    </td>
+                    <td className="px-6 py-4 text-slate-600">
+                      {peserta.biodata?.prodi1 || '-'}
+                    </td>
+                    <td className="px-6 py-4 text-slate-600">
+                      Baru Saja
+                    </td>
+                    <td className="px-6 py-4">
+                      {getStatusBadge(peserta.status)}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-center gap-2">
+                        <Link 
+                          href={`/admin/pendaftar/${peserta.id}`}
+                          className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-md transition"
+                          title="Lihat Detail"
+                        >
+                          <Eye className="w-5 h-5" />
+                        </Link>
+                        <button className="p-1.5 text-slate-400 hover:bg-slate-100 rounded-md transition">
+                          <MoreVertical className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
         
         <div className="p-4 border-t border-slate-200 flex items-center justify-between text-sm text-slate-600 bg-slate-50">
-          <div>Menampilkan 1-4 dari 248 pendaftar</div>
+          <div>Menampilkan total {filteredApplicants.length} pendaftar</div>
           <div className="flex gap-1">
             <button className="px-3 py-1 border border-slate-300 rounded hover:bg-white transition disabled:opacity-50" disabled>Seb</button>
             <button className="px-3 py-1 bg-green-700 text-white rounded">1</button>

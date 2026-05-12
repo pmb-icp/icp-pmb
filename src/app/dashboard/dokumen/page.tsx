@@ -1,19 +1,69 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, UploadCloud, File, CheckCircle, AlertCircle } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, UploadCloud, File, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { storage, db } from "@/lib/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 export default function UploadDokumenPage() {
+  const { user } = useAuth();
+  const [uploading, setUploading] = useState<string | null>(null);
   const [files, setFiles] = useState({
     foto: null as string | null,
     kk: null as string | null,
     ijazah: null as string | null,
   });
 
-  const handleUpload = (type: string) => {
-    // Mock upload
-    setFiles(prev => ({ ...prev, [type]: 'uploaded' }));
+  useEffect(() => {
+    const fetchDocs = async () => {
+      if (user) {
+        const docSnap = await getDoc(doc(db, "applicants", user.uid));
+        if (docSnap.exists() && docSnap.data().documents) {
+          setFiles(prev => ({ ...prev, ...docSnap.data().documents }));
+        }
+      }
+    };
+    fetchDocs();
+  }, [user]);
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: string) => {
+    if (!e.target.files || e.target.files.length === 0 || !user) return;
+    
+    const file = e.target.files[0];
+    setUploading(type);
+    
+    try {
+      const storageRef = ref(storage, `documents/${user.uid}/${type}_${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          // Progress can be tracked here
+        }, 
+        (error) => {
+          console.error("Upload error:", error);
+          alert("Gagal mengunggah file.");
+          setUploading(null);
+        }, 
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setFiles(prev => ({ ...prev, [type]: downloadURL }));
+          
+          await updateDoc(doc(db, "applicants", user.uid), {
+            [`documents.${type}`]: downloadURL,
+            "progress.dokumen": true,
+            status: "pembayaran"
+          });
+          setUploading(null);
+        }
+      );
+    } catch (error) {
+      console.error(error);
+      setUploading(null);
+    }
   };
 
   return (
@@ -44,13 +94,11 @@ export default function UploadDokumenPage() {
                   {files.foto && <span className="inline-block mt-2 text-xs font-medium bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Telah diunggah</span>}
                 </div>
               </div>
-              <button 
-                onClick={() => handleUpload('foto')}
-                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.foto ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}
-              >
-                <UploadCloud className="w-4 h-4" />
-                {files.foto ? 'Ganti File' : 'Upload File'}
-              </button>
+              <label className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition cursor-pointer ${uploading === 'foto' ? 'bg-slate-100 text-slate-400' : files.foto ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}>
+                {uploading === 'foto' ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
+                {uploading === 'foto' ? 'Mengunggah...' : files.foto ? 'Ganti File' : 'Upload File'}
+                <input type="file" className="hidden" accept="image/*,.pdf" onChange={(e) => handleUpload(e, 'foto')} disabled={uploading === 'foto'} />
+              </label>
             </div>
 
             {/* Dokumen: KK */}
@@ -65,13 +113,11 @@ export default function UploadDokumenPage() {
                   {files.kk && <span className="inline-block mt-2 text-xs font-medium bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Telah diunggah</span>}
                 </div>
               </div>
-              <button 
-                onClick={() => handleUpload('kk')}
-                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.kk ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}
-              >
-                <UploadCloud className="w-4 h-4" />
-                {files.kk ? 'Ganti File' : 'Upload File'}
-              </button>
+              <label className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition cursor-pointer ${uploading === 'kk' ? 'bg-slate-100 text-slate-400' : files.kk ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}>
+                {uploading === 'kk' ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
+                {uploading === 'kk' ? 'Mengunggah...' : files.kk ? 'Ganti File' : 'Upload File'}
+                <input type="file" className="hidden" accept="image/*,.pdf" onChange={(e) => handleUpload(e, 'kk')} disabled={uploading === 'kk'} />
+              </label>
             </div>
 
             {/* Dokumen: Ijazah */}
@@ -86,13 +132,11 @@ export default function UploadDokumenPage() {
                   {files.ijazah && <span className="inline-block mt-2 text-xs font-medium bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Telah diunggah</span>}
                 </div>
               </div>
-              <button 
-                onClick={() => handleUpload('ijazah')}
-                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.ijazah ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}
-              >
-                <UploadCloud className="w-4 h-4" />
-                {files.ijazah ? 'Ganti File' : 'Upload File'}
-              </button>
+              <label className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition cursor-pointer ${uploading === 'ijazah' ? 'bg-slate-100 text-slate-400' : files.ijazah ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}>
+                {uploading === 'ijazah' ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
+                {uploading === 'ijazah' ? 'Mengunggah...' : files.ijazah ? 'Ganti File' : 'Upload File'}
+                <input type="file" className="hidden" accept="image/*,.pdf" onChange={(e) => handleUpload(e, 'ijazah')} disabled={uploading === 'ijazah'} />
+              </label>
             </div>
 
           </div>

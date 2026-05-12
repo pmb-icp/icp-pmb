@@ -1,12 +1,49 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, User, FileText, CheckCircle, XCircle, File, Download } from "lucide-react";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function DetailPendaftarPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
-  
+  const [applicant, setApplicant] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchApplicant = async () => {
+      try {
+        const docSnap = await getDoc(doc(db, "applicants", resolvedParams.id));
+        if (docSnap.exists()) {
+          setApplicant({ id: docSnap.id, ...docSnap.data() });
+        }
+      } catch (error) {
+        console.error("Error fetching applicant:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchApplicant();
+  }, [resolvedParams.id]);
+
+  const updateStatus = async (newStatus: string) => {
+    try {
+      await updateDoc(doc(db, "applicants", resolvedParams.id), { status: newStatus });
+      setApplicant((prev: any) => ({ ...prev, status: newStatus }));
+      alert(`Status berhasil diubah menjadi ${newStatus}`);
+    } catch (error) {
+      console.error(error);
+      alert("Gagal mengubah status");
+    }
+  };
+
+  if (loading) return <div className="p-8 text-center">Memuat data...</div>;
+  if (!applicant) return <div className="p-8 text-center text-red-500">Data pendaftar tidak ditemukan.</div>;
+
+  const b = applicant.biodata || {};
+  const d = applicant.documents || {};
+
   return (
     <div>
       <div className="mb-6">
@@ -17,16 +54,16 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
         <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
           <div>
             <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
-              Siti Aminah
-              <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">Menunggu Verifikasi</span>
+              {b.namaLengkap || 'Nama Belum Diisi'}
+              <span className="bg-amber-100 text-amber-700 text-xs font-bold px-2.5 py-1 rounded-full">{applicant.status?.toUpperCase()}</span>
             </h1>
-            <p className="text-slate-500 mt-1 font-mono">PMB2026041 &bull; S1 Sistem Informasi</p>
+            <p className="text-slate-500 mt-1 font-mono">{applicant.registrationNumber} &bull; {b.prodi1 || 'Prodi Belum Dipilih'}</p>
           </div>
           <div className="flex gap-3">
-            <button className="px-4 py-2 bg-red-50 text-red-700 border border-red-200 rounded-lg font-medium hover:bg-red-100 transition">
+            <button onClick={() => updateStatus('ditolak')} className="px-4 py-2 bg-red-50 text-red-700 border border-red-200 rounded-lg font-medium hover:bg-red-100 transition">
               Tolak Pendaftaran
             </button>
-            <button className="px-4 py-2 bg-green-700 text-white rounded-lg font-medium hover:bg-green-800 transition shadow-sm">
+            <button onClick={() => updateStatus('lulus')} className="px-4 py-2 bg-green-700 text-white rounded-lg font-medium hover:bg-green-800 transition shadow-sm">
               Terima & Luluskan
             </button>
           </div>
@@ -44,23 +81,23 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
               <div>
                 <p className="text-sm text-slate-500">Nomor Induk Kependudukan (NIK)</p>
-                <p className="font-medium text-slate-900 mt-1">7304123456789012</p>
+                <p className="font-medium text-slate-900 mt-1">{b.nik || '-'}</p>
               </div>
               <div>
                 <p className="text-sm text-slate-500">Tempat, Tanggal Lahir</p>
-                <p className="font-medium text-slate-900 mt-1">Pinrang, 15 Agustus 2006</p>
+                <p className="font-medium text-slate-900 mt-1">{b.tempatLahir || '-'}, {b.tanggalLahir || '-'}</p>
               </div>
               <div>
                 <p className="text-sm text-slate-500">Jenis Kelamin</p>
-                <p className="font-medium text-slate-900 mt-1">Perempuan</p>
+                <p className="font-medium text-slate-900 mt-1">{b.jenisKelamin === 'L' ? 'Laki-laki' : b.jenisKelamin === 'P' ? 'Perempuan' : '-'}</p>
               </div>
               <div>
                 <p className="text-sm text-slate-500">Agama</p>
-                <p className="font-medium text-slate-900 mt-1">Islam</p>
+                <p className="font-medium text-slate-900 mt-1">{b.agama || '-'}</p>
               </div>
               <div className="md:col-span-2">
                 <p className="text-sm text-slate-500">Alamat Lengkap</p>
-                <p className="font-medium text-slate-900 mt-1">Jl. Pendidikan No. 45, Kecamatan Watang Sawitto, Kabupaten Pinrang, Sulawesi Selatan</p>
+                <p className="font-medium text-slate-900 mt-1">{b.alamat || '-'}</p>
               </div>
             </div>
           </div>
@@ -73,19 +110,19 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
               <div>
                 <p className="text-sm text-slate-500">NISN</p>
-                <p className="font-medium text-slate-900 mt-1">0061234567</p>
+                <p className="font-medium text-slate-900 mt-1">{b.nisn || '-'}</p>
               </div>
               <div>
                 <p className="text-sm text-slate-500">Asal Sekolah</p>
-                <p className="font-medium text-slate-900 mt-1">SMAN 1 Pinrang</p>
+                <p className="font-medium text-slate-900 mt-1">{b.asalSekolah || '-'}</p>
               </div>
               <div>
                 <p className="text-sm text-slate-500">Jurusan</p>
-                <p className="font-medium text-slate-900 mt-1">MIPA</p>
+                <p className="font-medium text-slate-900 mt-1">{b.jurusanSekolah || '-'}</p>
               </div>
               <div>
                 <p className="text-sm text-slate-500">Tahun Lulus & Nilai</p>
-                <p className="font-medium text-slate-900 mt-1">2024 (Rata-rata: 88.5)</p>
+                <p className="font-medium text-slate-900 mt-1">{b.tahunLulus || '-'} (Rata-rata: {b.nilaiRata || '-'})</p>
               </div>
             </div>
           </div>
@@ -106,14 +143,15 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                     </div>
                     <div>
                       <p className="font-medium text-sm text-slate-900">Pas Foto</p>
-                      <button className="text-xs text-blue-600 hover:underline">Lihat file</button>
+                      {d.foto ? (
+                        <a href={d.foto} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline">Lihat file</a>
+                      ) : (
+                        <span className="text-xs text-red-500">Belum diunggah</span>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <button className="flex-1 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700">Valid</button>
-                  <button className="flex-1 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 rounded-md hover:bg-slate-200">Revisi</button>
-                </div>
+
               </div>
 
               <div className="border border-slate-200 rounded-xl p-3">
@@ -124,14 +162,15 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                     </div>
                     <div>
                       <p className="font-medium text-sm text-slate-900">Kartu Keluarga</p>
-                      <button className="text-xs text-blue-600 hover:underline">Lihat file</button>
+                      {d.kk ? (
+                        <a href={d.kk} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline">Lihat file</a>
+                      ) : (
+                        <span className="text-xs text-red-500">Belum diunggah</span>
+                      )}
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <button className="flex-1 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700">Valid</button>
-                  <button className="flex-1 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 rounded-md hover:bg-slate-200">Revisi</button>
-                </div>
+
               </div>
 
               <div className="border border-slate-200 rounded-xl p-3">
@@ -142,13 +181,13 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                     </div>
                     <div>
                       <p className="font-medium text-sm text-slate-900">Ijazah / SKL</p>
-                      <button className="text-xs text-blue-600 hover:underline">Lihat file</button>
+                      {d.ijazah ? (
+                        <a href={d.ijazah} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline">Lihat file</a>
+                      ) : (
+                        <span className="text-xs text-red-500">Belum diunggah</span>
+                      )}
                     </div>
                   </div>
-                </div>
-                <div className="flex gap-2">
-                  <button className="flex-1 py-1.5 text-xs font-medium text-white bg-green-600 rounded-md hover:bg-green-700">Valid</button>
-                  <button className="flex-1 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 rounded-md hover:bg-slate-200">Revisi</button>
                 </div>
               </div>
             </div>
@@ -165,11 +204,14 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                 </div>
                 <div>
                   <p className="font-medium text-sm text-slate-900">Bukti Transfer BSI</p>
-                  <p className="text-xs text-slate-500 mt-0.5">Rp 250.000 (12 Mei 2026)</p>
-                  <button className="text-xs text-blue-600 hover:underline mt-1">Lihat file</button>
+                  {applicant.paymentProof ? (
+                    <a href={applicant.paymentProof} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline mt-1 block">Lihat file bukti transfer</a>
+                  ) : (
+                    <p className="text-xs text-red-500 mt-1">Belum melakukan pembayaran</p>
+                  )}
                 </div>
               </div>
-              <button className="w-full py-2 bg-green-700 text-white rounded-lg font-medium text-sm hover:bg-green-800 transition">
+              <button onClick={() => updateStatus('lulus')} className="w-full py-2 bg-green-700 text-white rounded-lg font-medium text-sm hover:bg-green-800 transition">
                 Konfirmasi Pembayaran
               </button>
             </div>

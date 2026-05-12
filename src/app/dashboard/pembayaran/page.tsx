@@ -1,12 +1,30 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Copy, CreditCard, Building, UploadCloud, Info } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, Copy, CreditCard, Building, UploadCloud, Info, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
+import { storage, db } from "@/lib/firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, updateDoc, getDoc } from "firebase/firestore";
 
 export default function PembayaranPage() {
+  const { user } = useAuth();
   const [copied, setCopied] = useState(false);
-  const [proofUploaded, setProofUploaded] = useState(false);
+  const [proofUploaded, setProofUploaded] = useState<string | null>(null);
+  const [uploading, setUploading] = useState(false);
+  
+  useEffect(() => {
+    const fetchDoc = async () => {
+      if (user) {
+        const docSnap = await getDoc(doc(db, "applicants", user.uid));
+        if (docSnap.exists() && docSnap.data().paymentProof) {
+          setProofUploaded(docSnap.data().paymentProof);
+        }
+      }
+    };
+    fetchDoc();
+  }, [user]);
   
   const virtualAccount = "8899010002934882";
   const amount = 250000;
@@ -17,8 +35,39 @@ export default function PembayaranPage() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleUpload = () => {
-    setProofUploaded(true);
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0 || !user) return;
+    
+    const file = e.target.files[0];
+    setUploading(true);
+    
+    try {
+      const storageRef = ref(storage, `payments/${user.uid}/bukti_transfer_${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      
+      uploadTask.on('state_changed', 
+        null, 
+        (error) => {
+          console.error("Upload error:", error);
+          alert("Gagal mengunggah file.");
+          setUploading(false);
+        }, 
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          setProofUploaded(downloadURL);
+          
+          await updateDoc(doc(db, "applicants", user.uid), {
+            paymentProof: downloadURL,
+            "progress.pembayaran": true,
+            status: "verifikasi"
+          });
+          setUploading(false);
+        }
+      );
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
   };
 
   return (
@@ -98,13 +147,14 @@ export default function PembayaranPage() {
               <p className="text-sm text-slate-500 mb-6">Jika sudah melakukan transfer, wajib mengunggah bukti pembayaran di bawah ini agar panitia dapat memverifikasi.</p>
               
               {!proofUploaded ? (
-                <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center bg-slate-50 hover:bg-slate-100 transition cursor-pointer" onClick={handleUpload}>
+                <label className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center bg-slate-50 hover:bg-slate-100 transition cursor-pointer">
                   <div className="w-16 h-16 bg-green-50 text-green-700 rounded-full flex items-center justify-center mb-4 border border-green-100">
-                    <UploadCloud className="w-8 h-8" />
+                    {uploading ? <Loader2 className="w-8 h-8 animate-spin" /> : <UploadCloud className="w-8 h-8" />}
                   </div>
-                  <p className="font-medium text-slate-900 text-center">Klik untuk memilih file bukti transfer</p>
+                  <p className="font-medium text-slate-900 text-center">{uploading ? 'Sedang Mengunggah...' : 'Klik untuk memilih file bukti transfer'}</p>
                   <p className="text-sm text-slate-500 mt-1">Format JPG, PNG, atau PDF (Max. 2MB)</p>
-                </div>
+                  <input type="file" className="hidden" accept="image/*,.pdf" onChange={handleUpload} disabled={uploading} />
+                </label>
               ) : (
                 <div className="border border-emerald-200 bg-emerald-50 rounded-xl p-6 flex flex-col items-center text-center">
                   <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
@@ -112,7 +162,7 @@ export default function PembayaranPage() {
                   </div>
                   <h4 className="font-bold text-emerald-900 mb-1">Bukti Transfer Berhasil Diunggah</h4>
                   <p className="text-sm text-emerald-700 mb-6">Panitia sedang memverifikasi pembayaran Anda. Proses ini biasanya memakan waktu 1x24 jam kerja.</p>
-                  <button className="text-emerald-600 text-sm font-medium hover:underline" onClick={() => setProofUploaded(false)}>
+                  <button className="text-emerald-600 text-sm font-medium hover:underline" onClick={() => setProofUploaded(null)}>
                     Unggah Ulang Dokumen
                   </button>
                 </div>
