@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { 
   LogOut, 
   FileText, 
@@ -11,11 +13,53 @@ import {
   Clock, 
   AlertCircle
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { auth, db } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function DashboardPage() {
-  // Mock data untuk tahap MVP
-  const applicantName = "Budi Santoso";
-  const registrationNumber = "PMB2026001";
+  const router = useRouter();
+  const { user, userData, loading } = useAuth();
+  const [registrationNumber, setRegistrationNumber] = useState("Memuat...");
+  
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
+
+  useEffect(() => {
+    const fetchApplicantData = async () => {
+      if (user) {
+        try {
+          const docRef = doc(db, "applicants", user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setRegistrationNumber(docSnap.data().registrationNumber);
+          }
+        } catch (error) {
+          console.error("Error fetching applicant data:", error);
+        }
+      }
+    };
+    fetchApplicantData();
+  }, [user]);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout error", error);
+    }
+  };
+
+  if (loading || !user) {
+    return <div className="min-h-screen flex items-center justify-center">Memuat...</div>;
+  }
+
+  const applicantName = userData?.name || user.email?.split('@')[0] || "Peserta";
   
   const steps = [
     { id: 1, name: 'Biodata', status: 'completed', icon: FileText, href: '/dashboard/formulir' },
@@ -36,7 +80,7 @@ export default function DashboardPage() {
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium text-slate-700 hidden sm:block">Halo, {applicantName}</span>
-              <button className="flex items-center gap-2 text-sm text-red-600 hover:bg-red-50 px-3 py-2 rounded-md transition">
+              <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-red-600 hover:bg-red-50 px-3 py-2 rounded-md transition cursor-pointer">
                 <LogOut className="w-4 h-4" />
                 <span className="hidden sm:block">Keluar</span>
               </button>
