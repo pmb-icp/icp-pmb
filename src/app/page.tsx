@@ -117,6 +117,11 @@ export default function Home() {
               </div>
             ))}
           </div>
+          <div className="mt-10 text-center">
+            <Link href="/program-studi" className="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-3 rounded-xl font-semibold hover:bg-slate-800 transition shadow-sm hover:shadow-md">
+              Lihat Detail Program Studi <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -293,9 +298,10 @@ export default function Home() {
           <div>
             <h4 className="text-white font-semibold mb-4">Tautan Cepat</h4>
             <ul className="space-y-2 text-sm">
+              <li><Link href="/panduan" className="hover:text-green-400 transition">Panduan Pendaftaran</Link></li>
+              <li><Link href="/program-studi" className="hover:text-green-400 transition">Daftar Program Studi</Link></li>
               <li><Link href="/login" className="hover:text-green-400 transition">Masuk Dashboard</Link></li>
               <li><Link href="/register" className="hover:text-green-400 transition">Daftar Akun Baru</Link></li>
-              <li><Link href="/lupa-password" className="hover:text-green-400 transition">Lupa Password</Link></li>
               <li><Link href="/pengumuman" className="hover:text-green-400 transition">Cek Kelulusan</Link></li>
             </ul>
           </div>
