@@ -20,7 +20,7 @@ export default function AdminDashboardPage() {
     const fetchStats = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "applicants"));
-        const applicants = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const applicants = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as any[];
         
         let total = applicants.length;
         let menunggu = 0;

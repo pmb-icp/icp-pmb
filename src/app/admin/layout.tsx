@@ -14,15 +14,16 @@ import {
 
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { logout } = useAuth();
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
-      await logout();
+      await signOut(auth);
       router.push('/login');
     } catch (error) {
       console.error("Gagal logout:", error);
