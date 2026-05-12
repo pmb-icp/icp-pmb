@@ -49,6 +49,60 @@ export default function AdminPendaftarPage() {
     app.biodata?.namaLengkap?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const exportToCSV = () => {
+    if (filteredApplicants.length === 0) {
+      alert("Tidak ada data untuk diexport");
+      return;
+    }
+
+    // Define CSV Headers
+    const headers = [
+      "No. Pendaftaran", "NIK", "Nama Lengkap", "Jenis Kelamin", "Agama", 
+      "Tempat Lahir", "Tanggal Lahir", "No. HP", "Email", "Alamat",
+      "Asal Sekolah", "Jurusan Sekolah", "Tahun Lulus", "Nilai Rata-rata",
+      "Pilihan Prodi 1", "Pilihan Prodi 2", "Jalur Pendaftaran", "Status"
+    ];
+
+    // Map data to CSV rows
+    const csvRows = filteredApplicants.map(app => {
+      const b = app.biodata || {};
+      const row = [
+        app.registrationNumber || '-',
+        b.nik || '-',
+        b.namaLengkap || '-',
+        b.jenisKelamin === 'L' ? 'Laki-laki' : b.jenisKelamin === 'P' ? 'Perempuan' : '-',
+        b.agama || '-',
+        b.tempatLahir || '-',
+        b.tanggalLahir || '-',
+        b.noHp || '-',
+        b.email || '-',
+        `"${b.alamat || '-'}"`, // Quote strings that might contain commas
+        b.asalSekolah || '-',
+        b.jurusanSekolah || '-',
+        b.tahunLulus || '-',
+        b.nilaiRata || '-',
+        b.prodi1 || '-',
+        b.prodi2 || '-',
+        b.jalur || '-',
+        app.status || '-'
+      ];
+      return row.join(",");
+    });
+
+    // Combine headers and rows
+    const csvString = [headers.join(","), ...csvRows].join("\n");
+    
+    // Create and download Blob
+    const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `Data_Pendaftar_PMB_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div>
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -56,8 +110,11 @@ export default function AdminPendaftarPage() {
           <h1 className="text-2xl font-bold text-slate-900">Data Pendaftar</h1>
           <p className="text-slate-500 mt-1">Kelola dan verifikasi seluruh data pendaftar PMB.</p>
         </div>
-        <button className="bg-green-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-800 transition shadow-sm">
-          Export Data (Excel)
+        <button 
+          onClick={exportToCSV}
+          className="bg-green-700 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-800 transition shadow-sm"
+        >
+          Export Data (CSV)
         </button>
       </div>
 
