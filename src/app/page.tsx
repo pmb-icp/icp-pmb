@@ -14,6 +14,7 @@ export default function Home() {
           </Link>
           <nav className="hidden md:flex gap-6">
             <Link href="/" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Beranda</Link>
+            <Link href="/profil" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Profil Kampus</Link>
             <Link href="#prodi" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Program Studi</Link>
             <Link href="#jalur" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Jalur Masuk</Link>
             <Link href="#biaya" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Biaya Kuliah</Link>
