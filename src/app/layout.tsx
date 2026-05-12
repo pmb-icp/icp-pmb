@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "PMB Online - Institut Cokroaminoto Pinrang",
+  title: "Penerimaan Mahasiswa Baru - Institut Cokroaminoto Pinrang",
   description: "Sistem Penerimaan Mahasiswa Baru Online Institut Cokroaminoto Pinrang",
 };
 
