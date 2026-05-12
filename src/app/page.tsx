@@ -211,6 +211,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* FAQ Section */}
+      <section id="faq" className="py-20 bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4 flex items-center justify-center gap-2">
+              <HelpCircle className="w-8 h-8 text-green-600" />
+              Pertanyaan Seputar PMB
+            </h2>
+            <p className="text-slate-600">Jawaban cepat untuk pertanyaan yang paling sering ditanyakan oleh calon mahasiswa.</p>
+          </div>
+          
+          <div className="space-y-4">
+            {[
+              { q: "Apakah ada batasan tahun kelulusan untuk mendaftar?", a: "Tidak ada batasan tahun kelulusan. Kami menerima calon mahasiswa dari berbagai tahun kelulusan asalkan memiliki ijazah SMA/SMK/MA sederajat yang sah." },
+              { q: "Bagaimana cara mendapatkan beasiswa KIP Kuliah?", a: "Pilih 'Jalur KIP Kuliah' saat mendaftar. Setelah lulus seleksi awal, Anda wajib melampirkan Kartu KIP atau Surat Keterangan Tidak Mampu (SKTM) dari kelurahan setempat untuk proses verifikasi lanjutan." },
+              { q: "Apakah biaya UKT bisa dicicil?", a: "Ya, Institut Cokroaminoto Pinrang memberikan kemudahan pembayaran UKT yang dapat dicicil hingga 3 kali dalam satu semester." },
+              { q: "Apakah kelas karyawan/ekstensi tersedia?", a: "Tentu. Kami menyediakan kelas sore/malam khusus bagi mahasiswa yang sudah bekerja dengan jadwal yang fleksibel tanpa mengurangi kualitas pembelajaran." },
+              { q: "Berapa lama proses verifikasi dokumen dan pembayaran?", a: "Proses verifikasi biasanya memakan waktu maksimal 2x24 jam hari kerja. Anda dapat mengecek status secara berkala di Dashboard akun Anda." }
+            ].map((faq, i) => (
+              <details key={i} className="group bg-slate-50 border border-slate-200 rounded-2xl [&_summary::-webkit-details-marker]:hidden">
+                <summary className="flex cursor-pointer items-center justify-between gap-1.5 p-5 text-slate-900 font-semibold hover:text-green-700 transition">
+                  <h3 className="text-base sm:text-lg">{faq.q}</h3>
+                  <ChevronDown className="w-5 h-5 shrink-0 transition duration-300 group-open:-rotate-180" />
+                </summary>
+                <div className="p-5 pt-0 text-slate-600 text-sm sm:text-base leading-relaxed border-t border-slate-200/60 mt-2 pt-4">
+                  <p>{faq.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Floating WhatsApp */}
       <a href="https://wa.me/6281122334455" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center">
         <MessageCircle className="w-8 h-8" />
