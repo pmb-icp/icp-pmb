@@ -35,7 +35,7 @@ export default function UploadDokumenPage() {
             {/* Dokumen: Foto Formal */}
             <div className="border border-slate-200 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${files.foto ? 'bg-emerald-100 text-emerald-600' : 'bg-blue-100 text-blue-600'}`}>
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${files.foto ? 'bg-emerald-100 text-emerald-600' : 'bg-green-100 text-green-700'}`}>
                   {files.foto ? <CheckCircle className="w-6 h-6" /> : <File className="w-6 h-6" />}
                 </div>
                 <div>
@@ -46,7 +46,7 @@ export default function UploadDokumenPage() {
               </div>
               <button 
                 onClick={() => handleUpload('foto')}
-                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.foto ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-blue-50 text-blue-600 hover:bg-blue-100'}`}
+                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.foto ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}
               >
                 <UploadCloud className="w-4 h-4" />
                 {files.foto ? 'Ganti File' : 'Upload File'}
@@ -56,7 +56,7 @@ export default function UploadDokumenPage() {
             {/* Dokumen: KK */}
             <div className="border border-slate-200 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${files.kk ? 'bg-emerald-100 text-emerald-600' : 'bg-blue-100 text-blue-600'}`}>
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${files.kk ? 'bg-emerald-100 text-emerald-600' : 'bg-green-100 text-green-700'}`}>
                   {files.kk ? <CheckCircle className="w-6 h-6" /> : <File className="w-6 h-6" />}
                 </div>
                 <div>
@@ -67,7 +67,7 @@ export default function UploadDokumenPage() {
               </div>
               <button 
                 onClick={() => handleUpload('kk')}
-                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.kk ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-blue-50 text-blue-600 hover:bg-blue-100'}`}
+                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.kk ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}
               >
                 <UploadCloud className="w-4 h-4" />
                 {files.kk ? 'Ganti File' : 'Upload File'}
@@ -77,7 +77,7 @@ export default function UploadDokumenPage() {
             {/* Dokumen: Ijazah */}
             <div className="border border-slate-200 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${files.ijazah ? 'bg-emerald-100 text-emerald-600' : 'bg-blue-100 text-blue-600'}`}>
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${files.ijazah ? 'bg-emerald-100 text-emerald-600' : 'bg-green-100 text-green-700'}`}>
                   {files.ijazah ? <CheckCircle className="w-6 h-6" /> : <File className="w-6 h-6" />}
                 </div>
                 <div>
@@ -88,7 +88,7 @@ export default function UploadDokumenPage() {
               </div>
               <button 
                 onClick={() => handleUpload('ijazah')}
-                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.ijazah ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-blue-50 text-blue-600 hover:bg-blue-100'}`}
+                className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition ${files.ijazah ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}
               >
                 <UploadCloud className="w-4 h-4" />
                 {files.ijazah ? 'Ganti File' : 'Upload File'}
@@ -97,15 +97,15 @@ export default function UploadDokumenPage() {
 
           </div>
 
-          <div className="mt-8 bg-blue-50 p-4 rounded-xl flex items-start gap-3 border border-blue-100">
-            <AlertCircle className="w-6 h-6 text-blue-600 shrink-0 mt-0.5" />
-            <p className="text-sm text-blue-800">
+          <div className="mt-8 bg-amber-50 p-4 rounded-xl flex items-start gap-3 border border-amber-100">
+            <AlertCircle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5" />
+            <p className="text-sm text-amber-800">
               Pastikan semua dokumen jelas terbaca dan sesuai dengan aslinya. Panitia berhak membatalkan pendaftaran jika ditemukan indikasi pemalsuan dokumen.
             </p>
           </div>
 
           <div className="mt-8 pt-6 border-t border-slate-200 flex justify-end">
-            <Link href="/dashboard/pembayaran" className={`px-6 py-3 rounded-lg font-bold text-white transition ${files.foto && files.kk && files.ijazah ? 'bg-blue-600 hover:bg-blue-700' : 'bg-slate-300 cursor-not-allowed'}`}>
+            <Link href="/dashboard/pembayaran" className={`px-6 py-3 rounded-lg font-bold text-white transition ${files.foto && files.kk && files.ijazah ? 'bg-green-700 hover:bg-green-800' : 'bg-slate-300 cursor-not-allowed'}`}>
               Lanjut ke Pembayaran
             </Link>
           </div>

@@ -47,21 +47,21 @@ export default function PembayaranPage() {
             
             {/* Info Pembayaran */}
             <div className="space-y-6">
-              <div className="bg-blue-600 rounded-xl p-6 text-white shadow-md relative overflow-hidden">
+              <div className="bg-green-700 rounded-xl p-6 text-white shadow-md relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-20">
                   <CreditCard className="w-24 h-24" />
                 </div>
                 <div className="relative z-10">
-                  <p className="text-blue-100 mb-1 text-sm font-medium">Total Tagihan</p>
+                  <p className="text-green-100 mb-1 text-sm font-medium">Total Tagihan</p>
                   <h2 className="text-3xl font-bold mb-6">Rp {amount.toLocaleString('id-ID')}</h2>
                   
-                  <p className="text-blue-100 mb-1 text-sm font-medium">Bank Tujuan</p>
+                  <p className="text-green-100 mb-1 text-sm font-medium">Bank Tujuan</p>
                   <div className="flex items-center gap-2 mb-4">
                     <Building className="w-5 h-5" />
                     <span className="font-semibold text-lg">Bank BSI (Bank Syariah Indonesia)</span>
                   </div>
 
-                  <p className="text-blue-100 mb-1 text-sm font-medium">Nomor Virtual Account / Rekening</p>
+                  <p className="text-green-100 mb-1 text-sm font-medium">Nomor Virtual Account / Rekening</p>
                   <div className="flex items-center gap-3">
                     <span className="font-mono text-xl tracking-wider">{virtualAccount}</span>
                     <button 
@@ -71,15 +71,15 @@ export default function PembayaranPage() {
                     >
                       <Copy className="w-5 h-5" />
                     </button>
-                    {copied && <span className="text-xs bg-white text-blue-600 px-2 py-1 rounded">Tersalin!</span>}
+                    {copied && <span className="text-xs bg-white text-green-700 px-2 py-1 rounded">Tersalin!</span>}
                   </div>
-                  <p className="text-xs text-blue-200 mt-2">a.n. PMB Institut Cokroaminoto Pinrang</p>
+                  <p className="text-xs text-green-200 mt-2">a.n. PMB Institut Cokroaminoto Pinrang</p>
                 </div>
               </div>
 
               <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 text-sm">
                 <h3 className="font-bold text-slate-900 mb-3 flex items-center gap-2">
-                  <Info className="w-4 h-4 text-blue-600" />
+                  <Info className="w-4 h-4 text-green-700" />
                   Instruksi Pembayaran
                 </h3>
                 <ol className="list-decimal list-inside space-y-2 text-slate-600">
@@ -99,7 +99,7 @@ export default function PembayaranPage() {
               
               {!proofUploaded ? (
                 <div className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center bg-slate-50 hover:bg-slate-100 transition cursor-pointer" onClick={handleUpload}>
-                  <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4">
+                  <div className="w-16 h-16 bg-green-50 text-green-700 rounded-full flex items-center justify-center mb-4 border border-green-100">
                     <UploadCloud className="w-8 h-8" />
                   </div>
                   <p className="font-medium text-slate-900 text-center">Klik untuk memilih file bukti transfer</p>
@@ -120,7 +120,7 @@ export default function PembayaranPage() {
 
               {proofUploaded && (
                 <div className="mt-6">
-                  <Link href="/dashboard" className="w-full flex justify-center items-center py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition">
+                  <Link href="/dashboard" className="w-full flex justify-center items-center py-3 bg-green-700 text-white rounded-lg font-medium hover:bg-green-800 transition">
                     Kembali ke Dashboard
                   </Link>
                 </div>

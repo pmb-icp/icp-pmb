@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, GraduationCap, Mail, Lock, User, Phone } from "lucide-react";
+import { ArrowLeft, Mail, Lock, User, Phone } from "lucide-react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/lib/firebase";
@@ -79,8 +80,8 @@ export default function RegisterPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md mt-10 sm:mt-0">
         <div className="flex justify-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center">
-            <GraduationCap className="h-10 w-10 text-blue-600" />
+          <div className="w-20 h-20 bg-green-50 rounded-2xl flex items-center justify-center border border-green-100">
+            <Image src="/logo.png" alt="Logo ICP" width={56} height={56} className="object-contain" />
           </div>
         </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-900">
@@ -88,7 +89,7 @@ export default function RegisterPage() {
         </h2>
         <p className="mt-2 text-center text-sm text-slate-600">
           Sudah punya akun?{" "}
-          <Link href="/login" className="font-medium text-blue-600 hover:text-blue-500 transition">
+          <Link href="/login" className="font-medium text-green-700 hover:text-green-600 transition">
             Masuk di sini
           </Link>
         </p>
@@ -118,7 +119,7 @@ export default function RegisterPage() {
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
+                  className="focus:ring-green-600 focus:border-green-600 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
                   placeholder="Nama Lengkap"
                 />
               </div>
@@ -140,7 +141,7 @@ export default function RegisterPage() {
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
+                  className="focus:ring-green-600 focus:border-green-600 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
                   placeholder="anda@email.com"
                 />
               </div>
@@ -161,7 +162,7 @@ export default function RegisterPage() {
                   required
                   value={formData.phone}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
+                  className="focus:ring-green-600 focus:border-green-600 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
                   placeholder="081234567890"
                 />
               </div>
@@ -182,7 +183,7 @@ export default function RegisterPage() {
                   required
                   value={formData.password}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
+                  className="focus:ring-green-600 focus:border-green-600 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
                   placeholder="Minimal 8 karakter"
                 />
               </div>
@@ -203,7 +204,7 @@ export default function RegisterPage() {
                   required
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
+                  className="focus:ring-green-600 focus:border-green-600 block w-full pl-10 sm:text-sm border-slate-300 rounded-md py-2.5 border"
                   placeholder="Ulangi password"
                 />
               </div>
@@ -213,7 +214,7 @@ export default function RegisterPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:bg-blue-400"
+                className="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 transition-colors disabled:bg-green-400"
               >
                 {loading ? "Memproses..." : "Daftar Akun"}
               </button>

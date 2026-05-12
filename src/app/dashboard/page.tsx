@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { 
   LogOut, 
   FileText, 
@@ -8,8 +9,7 @@ import {
   CreditCard, 
   CheckCircle, 
   Clock, 
-  AlertCircle,
-  GraduationCap
+  AlertCircle
 } from "lucide-react";
 
 export default function DashboardPage() {
@@ -31,7 +31,7 @@ export default function DashboardPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center gap-2">
-              <GraduationCap className="h-8 w-8 text-blue-600" />
+              <Image src="/logo.png" alt="Logo ICP" width={32} height={32} className="object-contain" />
               <span className="font-bold text-xl text-slate-900 tracking-tight">Dashboard Peserta</span>
             </div>
             <div className="flex items-center gap-4">
@@ -52,19 +52,19 @@ export default function DashboardPage() {
           <div className="lg:col-span-2 space-y-6">
             
             {/* Welcome Banner */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl p-6 text-white shadow-lg">
+            <div className="bg-gradient-to-r from-green-700 to-emerald-600 rounded-2xl p-6 text-white shadow-lg">
               <h1 className="text-2xl font-bold mb-2">Selamat Datang di PMB ICP</h1>
-              <p className="text-blue-100 mb-6">
+              <p className="text-green-100 mb-6">
                 Nomor Pendaftaran Anda: <span className="font-mono bg-white/20 px-2 py-1 rounded ml-1">{registrationNumber}</span>
               </p>
               <div className="bg-white/10 rounded-xl p-4 border border-white/20 flex items-start gap-3 backdrop-blur-sm">
                 <AlertCircle className="w-6 h-6 text-yellow-300 shrink-0 mt-0.5" />
                 <div>
                   <h3 className="font-semibold text-white">Langkah Selanjutnya</h3>
-                  <p className="text-sm text-blue-50 mt-1">
+                  <p className="text-sm text-green-50 mt-1">
                     Anda perlu mengunggah dokumen kelengkapan berupa Foto, KTP/KK, dan Ijazah/SKL sebelum melanjutkan ke tahap pembayaran.
                   </p>
-                  <Link href="/dashboard/dokumen" className="inline-block mt-3 bg-white text-blue-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-50 transition">
+                  <Link href="/dashboard/dokumen" className="inline-block mt-3 bg-white text-green-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-50 transition">
                     Unggah Dokumen Sekarang
                   </Link>
                 </div>
@@ -82,21 +82,21 @@ export default function DashboardPage() {
                   {steps.map((step, index) => (
                     <Link href={step.href} key={step.name} className="relative flex flex-row sm:flex-col items-center group">
                       {step.status === 'completed' ? (
-                        <div className="h-10 w-10 rounded-full bg-emerald-500 text-white flex items-center justify-center shrink-0 z-10 ring-4 ring-white">
+                        <div className="h-10 w-10 rounded-full bg-yellow-500 text-white flex items-center justify-center shrink-0 z-10 ring-4 ring-white">
                           <CheckCircle className="w-5 h-5" />
                         </div>
                       ) : step.status === 'current' ? (
-                        <div className="h-10 w-10 rounded-full bg-blue-600 text-white flex items-center justify-center shrink-0 z-10 ring-4 ring-white ring-offset-2 ring-offset-blue-100">
+                        <div className="h-10 w-10 rounded-full bg-green-600 text-white flex items-center justify-center shrink-0 z-10 ring-4 ring-white ring-offset-2 ring-offset-green-100">
                           <step.icon className="w-5 h-5" />
                         </div>
                       ) : (
-                        <div className="h-10 w-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center shrink-0 z-10 ring-4 ring-white border border-slate-200 group-hover:border-blue-300 transition">
+                        <div className="h-10 w-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center shrink-0 z-10 ring-4 ring-white border border-slate-200 group-hover:border-green-300 transition">
                           <step.icon className="w-5 h-5" />
                         </div>
                       )}
                       
                       <div className="ml-4 sm:ml-0 sm:mt-3 text-left sm:text-center">
-                        <p className={`text-sm font-medium ${step.status === 'current' ? 'text-blue-600' : step.status === 'completed' ? 'text-slate-900' : 'text-slate-500'}`}>
+                        <p className={`text-sm font-medium ${step.status === 'current' ? 'text-green-700' : step.status === 'completed' ? 'text-slate-900' : 'text-slate-500'}`}>
                           {step.name}
                         </p>
                         <p className="text-xs text-slate-500 sm:hidden">
@@ -117,12 +117,12 @@ export default function DashboardPage() {
             {/* Timeline */}
             <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
               <h2 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <Clock className="w-5 h-5 text-blue-600" />
+                <Clock className="w-5 h-5 text-green-700" />
                 Jadwal Penting
               </h2>
               <ul className="space-y-4">
-                <li className="relative pl-6 border-l-2 border-blue-600 pb-4">
-                  <div className="absolute w-3 h-3 bg-blue-600 rounded-full -left-[7px] top-1.5 ring-4 ring-white"></div>
+                <li className="relative pl-6 border-l-2 border-green-600 pb-4">
+                  <div className="absolute w-3 h-3 bg-green-600 rounded-full -left-[7px] top-1.5 ring-4 ring-white"></div>
                   <p className="text-sm font-semibold text-slate-900">Pendaftaran Gelombang 1</p>
                   <p className="text-xs text-slate-500 mt-1">1 Feb - 30 Apr 2026</p>
                 </li>
@@ -140,12 +140,12 @@ export default function DashboardPage() {
             </div>
 
             {/* Bantuan */}
-            <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
-              <h2 className="text-base font-bold text-blue-900 mb-2">Butuh Bantuan?</h2>
-              <p className="text-sm text-blue-700 mb-4">
+            <div className="bg-green-50 rounded-2xl p-6 border border-green-100">
+              <h2 className="text-base font-bold text-green-900 mb-2">Butuh Bantuan?</h2>
+              <p className="text-sm text-green-700 mb-4">
                 Jika Anda mengalami kendala selama proses pendaftaran, silakan hubungi panitia PMB.
               </p>
-              <button className="w-full bg-white text-blue-600 border border-blue-200 py-2 rounded-md text-sm font-semibold hover:bg-blue-50 transition">
+              <button className="w-full bg-white text-green-700 border border-green-200 py-2 rounded-md text-sm font-semibold hover:bg-green-50 transition">
                 Hubungi via WhatsApp
               </button>
             </div>

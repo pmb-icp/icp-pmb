@@ -15,7 +15,7 @@ export default function FormulirPage() {
           <div key={step} className="flex items-center">
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
               currentStep === step 
-                ? "bg-blue-600 text-white ring-4 ring-blue-100" 
+                ? "bg-green-600 text-white ring-4 ring-green-100" 
                 : currentStep > step 
                   ? "bg-emerald-500 text-white" 
                   : "bg-slate-100 text-slate-400 border border-slate-200"
@@ -58,23 +58,23 @@ export default function FormulirPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="Sesuai Ijazah" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="Sesuai Ijazah" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">NIK (Nomor Induk Kependudukan)</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="16 Digit NIK" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="16 Digit NIK" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Tempat Lahir</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="Kota Lahir" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="Kota Lahir" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Tanggal Lahir</label>
-                    <input type="date" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border text-slate-600" />
+                    <input type="date" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border text-slate-600" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Jenis Kelamin</label>
-                    <select className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border bg-white">
+                    <select className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border bg-white">
                       <option value="">Pilih...</option>
                       <option value="L">Laki-laki</option>
                       <option value="P">Perempuan</option>
@@ -82,7 +82,7 @@ export default function FormulirPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Agama</label>
-                    <select className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border bg-white">
+                    <select className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border bg-white">
                       <option value="">Pilih...</option>
                       <option value="Islam">Islam</option>
                       <option value="Kristen">Kristen</option>
@@ -93,7 +93,7 @@ export default function FormulirPage() {
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-slate-700 mb-1">Alamat Lengkap</label>
-                    <textarea rows={3} className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="Sesuai KTP"></textarea>
+                    <textarea rows={3} className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="Sesuai KTP"></textarea>
                   </div>
                 </div>
               </div>
@@ -106,24 +106,24 @@ export default function FormulirPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">NISN</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="Nomor Induk Siswa Nasional" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="Nomor Induk Siswa Nasional" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Asal Sekolah</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="Nama SMA/SMK/MA" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="Nama SMA/SMK/MA" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Jurusan di Sekolah</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="IPA/IPS/RPL/Akuntansi dll" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="IPA/IPS/RPL/Akuntansi dll" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-1">Tahun Lulus</label>
-                      <input type="number" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="2024" />
+                      <input type="number" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="2024" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-slate-700 mb-1">Nilai Rata-rata</label>
-                      <input type="number" step="0.1" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" placeholder="85.5" />
+                      <input type="number" step="0.1" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" placeholder="85.5" />
                     </div>
                   </div>
                 </div>
@@ -137,23 +137,23 @@ export default function FormulirPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Nama Ayah</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Pekerjaan Ayah</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Nama Ibu</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Pekerjaan Ibu</label>
-                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border" />
+                    <input type="text" className="w-full border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border" />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-slate-700 mb-1">Penghasilan Orang Tua (Per Bulan)</label>
-                    <select className="w-full md:w-1/2 border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border bg-white">
+                    <select className="w-full md:w-1/2 border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border bg-white">
                       <option value="">Pilih range penghasilan...</option>
                       <option value="<1jt">Kurang dari Rp 1.000.000</option>
                       <option value="1-3jt">Rp 1.000.000 - Rp 3.000.000</option>
@@ -172,7 +172,7 @@ export default function FormulirPage() {
                 <div className="grid grid-cols-1 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">Jalur Pendaftaran</label>
-                    <select className="w-full md:w-1/2 border-slate-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border bg-white">
+                    <select className="w-full md:w-1/2 border-slate-300 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border bg-white">
                       <option value="">Pilih jalur...</option>
                       <option value="reguler">Reguler</option>
                       <option value="prestasi">Jalur Prestasi</option>
@@ -180,9 +180,9 @@ export default function FormulirPage() {
                     </select>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                      <label className="block text-sm font-bold text-blue-900 mb-2">Pilihan Program Studi 1</label>
-                      <select className="w-full border-blue-200 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 py-2.5 px-3 border bg-white">
+                    <div className="bg-green-50 p-4 rounded-xl border border-green-100">
+                      <label className="block text-sm font-bold text-green-900 mb-2">Pilihan Program Studi 1</label>
+                      <select className="w-full border-green-200 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border bg-white">
                         <option value="">Pilih prodi prioritas...</option>
                         <option value="S1-TI">S1 Teknik Informatika</option>
                         <option value="S1-SI">S1 Sistem Informasi</option>
@@ -220,7 +220,7 @@ export default function FormulirPage() {
                 <button
                   type="button"
                   onClick={() => setCurrentStep(prev => Math.min(totalSteps, prev + 1))}
-                  className="flex items-center gap-2 px-6 py-2.5 border border-transparent rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition"
+                  className="flex items-center gap-2 px-6 py-2.5 border border-transparent rounded-md text-sm font-medium text-white bg-green-700 hover:bg-green-800 transition"
                 >
                   Selanjutnya
                   <ChevronRight className="w-4 h-4" />
