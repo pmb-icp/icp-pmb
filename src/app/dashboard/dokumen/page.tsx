@@ -15,6 +15,7 @@ export default function UploadDokumenPage() {
     foto: null as string | null,
     kk: null as string | null,
     ijazah: null as string | null,
+    kip: null as string | null,
   });
 
   useEffect(() => {
@@ -103,8 +104,8 @@ export default function UploadDokumenPage() {
                   {files.foto ? <CheckCircle className="w-6 h-6" /> : <File className="w-6 h-6" />}
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">Pas Foto Formal</h3>
-                  <p className="text-sm text-slate-500 mt-1">Latar belakang merah atau biru, kemeja putih rapi.</p>
+                  <h3 className="font-bold text-slate-900">Pas Foto Berwarna Latar Merah (3x4)</h3>
+                  <p className="text-sm text-slate-500 mt-1">Sesuai persyaratan brosur. Kemeja putih rapi.</p>
                   {files.foto && <span className="inline-block mt-2 text-xs font-medium bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Telah diunggah</span>}
                 </div>
               </div>
@@ -122,8 +123,8 @@ export default function UploadDokumenPage() {
                   {files.kk ? <CheckCircle className="w-6 h-6" /> : <File className="w-6 h-6" />}
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">Kartu Keluarga (KK)</h3>
-                  <p className="text-sm text-slate-500 mt-1">Scan asli atau fotokopi legalisir yang jelas terbaca.</p>
+                  <h3 className="font-bold text-slate-900">KTP & Kartu Keluarga (KK)</h3>
+                  <p className="text-sm text-slate-500 mt-1">Jadikan dalam satu file PDF atau foto bersamaan.</p>
                   {files.kk && <span className="inline-block mt-2 text-xs font-medium bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Telah diunggah</span>}
                 </div>
               </div>
@@ -141,8 +142,8 @@ export default function UploadDokumenPage() {
                   {files.ijazah ? <CheckCircle className="w-6 h-6" /> : <File className="w-6 h-6" />}
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900">Ijazah / Surat Keterangan Lulus</h3>
-                  <p className="text-sm text-slate-500 mt-1">Scan Ijazah asli atau SKL resmi dari sekolah.</p>
+                  <h3 className="font-bold text-slate-900">Ijazah Terakhir & Transkrip Nilai</h3>
+                  <p className="text-sm text-slate-500 mt-1">Jadikan dalam satu file PDF, atau upload halaman depan ijazah.</p>
                   {files.ijazah && <span className="inline-block mt-2 text-xs font-medium bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Telah diunggah</span>}
                 </div>
               </div>
@@ -153,13 +154,35 @@ export default function UploadDokumenPage() {
               </label>
             </div>
 
+            {/* Dokumen: KIP */}
+            <div className="border border-slate-200 rounded-xl p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className={`w-12 h-12 rounded-lg flex items-center justify-center shrink-0 ${files.kip ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-500'}`}>
+                  {files.kip ? <CheckCircle className="w-6 h-6" /> : <File className="w-6 h-6" />}
+                </div>
+                <div>
+                  <h3 className="font-bold text-slate-900">Kartu KIP/KKS/BSM (Jika Ada)</h3>
+                  <p className="text-sm text-slate-500 mt-1">Opsional: Khusus bagi pendaftar jalur beasiswa.</p>
+                  {files.kip && <span className="inline-block mt-2 text-xs font-medium bg-emerald-100 text-emerald-700 px-2 py-1 rounded">Telah diunggah</span>}
+                </div>
+              </div>
+              <label className={`flex items-center justify-center gap-2 px-4 py-2 rounded-md font-medium text-sm w-full md:w-auto transition cursor-pointer ${uploading === 'kip' ? 'bg-slate-100 text-slate-400' : files.kip ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' : 'bg-green-50 text-green-700 hover:bg-green-100'}`}>
+                {uploading === 'kip' ? <Loader2 className="w-4 h-4 animate-spin" /> : <UploadCloud className="w-4 h-4" />}
+                {uploading === 'kip' ? 'Mengunggah...' : files.kip ? 'Ganti File' : 'Upload File'}
+                <input type="file" className="hidden" accept="image/*,.pdf" onChange={(e) => handleUpload(e, 'kip')} disabled={uploading === 'kip'} />
+              </label>
+            </div>
+
           </div>
 
           <div className="mt-8 bg-amber-50 p-4 rounded-xl flex items-start gap-3 border border-amber-100">
             <AlertCircle className="w-6 h-6 text-amber-600 shrink-0 mt-0.5" />
-            <p className="text-sm text-amber-800">
-              Pastikan semua dokumen jelas terbaca dan sesuai dengan aslinya. Panitia berhak membatalkan pendaftaran jika ditemukan indikasi pemalsuan dokumen.
-            </p>
+            <div>
+              <p className="text-sm text-amber-800 font-bold mb-1">Penting: Dokumen Fisik</p>
+              <p className="text-sm text-amber-800">
+                Sesuai persyaratan brosur, Anda WAJIB membawa dokumen fisik (Fotokopi legalisir masing-masing rangkap sesuai brosur) pada saat Daftar Ulang nanti.
+              </p>
+            </div>
           </div>
 
           <div className="mt-8 pt-6 border-t border-slate-200 flex justify-end">

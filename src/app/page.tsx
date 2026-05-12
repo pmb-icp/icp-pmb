@@ -57,30 +57,30 @@ export default function Home() {
       <section className="py-20 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Mengapa Memilih ICP?</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">Kami berkomitmen memberikan pendidikan terbaik dengan fasilitas modern dan biaya yang terjangkau bagi seluruh lapisan masyarakat.</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Keunggulan & Fasilitas Kampus</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">Visi: "Menjadi Perguruan Tinggi unggul dan berdaya saing di bidang Ilmu Hukum, Keguruan dan Ilmu Pendidikan di tingkat Nasional tahun 2027"</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
               <div className="w-16 h-16 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center mb-6">
                 <BookOpen className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Dosen Berkualitas</h3>
-              <p className="text-slate-600">Pengajar lulusan universitas terkemuka dengan pengalaman praktis di bidangnya.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Dosen & Kurikulum Terpadu</h3>
+              <p className="text-slate-600">Dosen dari kalangan praktisi, profesional dan akademisi berpengalaman. Kurikulum terpadu yang disesuaikan dengan kebutuhan terkini.</p>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
               <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
-                <Award className="w-8 h-8" />
+                <MapPin className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Peluang Kerja & Beasiswa</h3>
-              <p className="text-slate-600">Jejaring alumni yang luas dan tersedia berbagai beasiswa (KIP Kuliah & Prestasi).</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Lokasi Strategis & Fasilitas</h3>
+              <p className="text-slate-600">Lokasi representatif mudah menjangkau pusat kota. Fasilitas: Ruang Kuliah, Free Wifi, Perpustakaan, Sarana Olahraga, dan Pusat Kegiatan Mahasiswa.</p>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
               <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
-                <CheckCircle className="w-8 h-8" />
+                <Clock className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Kampus Islami Modern</h3>
-              <p className="text-slate-600">Lingkungan akademik yang memadukan keilmuan modern dengan nilai-nilai religius.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Kelas Eksekutif & SPP Diangsur</h3>
+              <p className="text-slate-600">Menyediakan kelas eksekutif untuk kemudahan mahasiswa yang kuliah sambil bekerja/mengajar. SPP juga bisa diangsur!</p>
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function Home() {
               { name: "Pendidikan Guru Sekolah Dasar (PGSD)", akreditasi: "B", desc: "Program unggulan untuk calon pendidik generasi dasar yang kreatif." },
               { name: "Pendidikan Matematika", akreditasi: "B", desc: "Melahirkan pengajar eksakta yang analitis, logis, dan inovatif." },
               { name: "Pendidikan Ekonomi", akreditasi: "B", desc: "Mencetak pendidik dan praktisi ekonomi yang adaptif terhadap era digital." },
-              { name: "Pendidikan Pancasila & Kewarganegaraan", akreditasi: "B", desc: "Membentuk karakter bangsa melalui pendidik yang nasionalis." },
+              { name: "Pendidikan PKn", akreditasi: "B", desc: "Membentuk karakter bangsa melalui pendidik yang nasionalis." },
               { name: "Ilmu Hukum", akreditasi: "B", desc: "Mencetak praktisi hukum yang adil, religius, dan berintegritas tinggi." }
             ].map((prodi, i) => (
               <div key={i} className="border border-slate-200 rounded-2xl p-6 hover:border-green-500 hover:shadow-lg transition-all group">
@@ -151,8 +151,14 @@ export default function Home() {
                 <div className="relative pl-8">
                   <div className="absolute w-4 h-4 bg-green-500 rounded-full -left-[9px] top-1 ring-4 ring-slate-900"></div>
                   <h4 className="text-lg font-bold text-white">Gelombang 1 Dibuka</h4>
-                  <p className="text-green-400 text-sm mb-1">1 Februari - 30 April 2026</p>
+                  <p className="text-green-400 text-sm mb-1">01 Maret - 31 Mei 2026</p>
                   <p className="text-slate-400 text-sm">Pendaftaran online, pengisian biodata, dan unggah berkas.</p>
+                </div>
+                <div className="relative pl-8">
+                  <div className="absolute w-4 h-4 bg-slate-600 rounded-full -left-[9px] top-1 ring-4 ring-slate-900"></div>
+                  <h4 className="text-lg font-bold text-white">Gelombang 2 Dibuka</h4>
+                  <p className="text-green-400 text-sm mb-1">01 Juni - 30 Agustus 2026</p>
+                  <p className="text-slate-400 text-sm">Kesempatan kedua bagi yang belum sempat mendaftar di gelombang pertama.</p>
                 </div>
                 <div className="relative pl-8">
                   <div className="absolute w-4 h-4 bg-slate-600 rounded-full -left-[9px] top-1 ring-4 ring-slate-900"></div>
@@ -196,10 +202,9 @@ export default function Home() {
             </div>
             <div className="p-8">
               <ul className="space-y-4 text-left">
-                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Sudah termasuk biaya SKS dan Praktikum.</li>
-                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Bebas Uang Pangkal / Uang Gedung.</li>
-                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Biaya pendaftaran awal hanya Rp 250.000.</li>
-                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Tersedia opsi cicilan per bulan bagi yang membutuhkan.</li>
+                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Sumbangan Penyelenggaraan Pendidikan (SPP) bisa diangsur.</li>
+                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Tersedia beasiswa KIP Kuliah bagi mahasiswa yang tidak mampu.</li>
+                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Menerima pendaftaran Mahasiswa Pindahan / Konversi.</li>
               </ul>
               <div className="mt-8 pt-8 border-t border-slate-100">
                 <Link href="/register" className="block w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition shadow-md">
@@ -267,12 +272,21 @@ export default function Home() {
             <h4 className="text-white font-semibold mb-4">Kontak</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-slate-500 shrink-0" />
-                <span>Jl. Pendidikan No. 1, Kabupaten Pinrang, Sulawesi Selatan</span>
+                <MapPin className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
+                <span>Jl. Teuku Umar No. 36 Pinrang</span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-slate-500 shrink-0" />
-                <span>+62 811 2233 4455</span>
+              <li className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
+                <div className="flex flex-col">
+                  <span className="font-semibold text-slate-400">Prodi Hukum:</span>
+                  <span>0823-4357-3729 / 0852-5580-2466</span>
+                  <span className="font-semibold text-slate-400 mt-2">Prodi Pendidikan:</span>
+                  <span>0821-9502-7732 / 0812-5383-1207</span>
+                </div>
+              </li>
+              <li className="flex items-center gap-3 pt-2">
+                <MessageCircle className="w-5 h-5 text-slate-500 shrink-0" />
+                <span className="text-xs break-all">institutcokroaminotopinrang@gmail.com</span>
               </li>
             </ul>
           </div>
