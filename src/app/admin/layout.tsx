@@ -12,15 +12,27 @@ import {
   Settings
 } from "lucide-react";
 
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/login');
+    } catch (error) {
+      console.error("Gagal logout:", error);
+    }
+  };
 
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
     { name: "Data Pendaftar", icon: Users, href: "/admin/pendaftar" },
-    { name: "Verifikasi Dokumen", icon: FileCheck, href: "/admin/dokumen" },
-    { name: "Verifikasi Pembayaran", icon: CreditCard, href: "/admin/pembayaran" },
-    { name: "Pengaturan", icon: Settings, href: "/admin/settings" },
+    // { name: "Pengaturan", icon: Settings, href: "/admin/settings" },
   ];
 
   return (
@@ -58,7 +70,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
 
         <div className="p-4 border-t border-slate-800">
-          <button className="flex items-center gap-3 px-4 py-3 w-full text-left text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-xl transition">
+          <button onClick={handleLogout} className="flex items-center gap-3 px-4 py-3 w-full text-left text-slate-400 hover:text-red-400 hover:bg-slate-800 rounded-xl transition">
             <LogOut className="w-5 h-5" />
             <span className="font-medium text-sm">Keluar</span>
           </button>

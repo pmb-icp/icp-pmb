@@ -22,6 +22,8 @@ export default function DashboardPage() {
   const router = useRouter();
   const { user, userData, loading } = useAuth();
   const [registrationNumber, setRegistrationNumber] = useState("Memuat...");
+  const [progress, setProgress] = useState({ biodata: false, dokumen: false, pembayaran: false });
+  const [status, setStatus] = useState("draft");
   
   useEffect(() => {
     if (!loading && !user) {
@@ -37,7 +39,10 @@ export default function DashboardPage() {
           const docSnap = await getDoc(docRef);
           
           if (docSnap.exists()) {
-            setRegistrationNumber(docSnap.data().registrationNumber);
+            const data = docSnap.data();
+            setRegistrationNumber(data.registrationNumber);
+            if (data.progress) setProgress(data.progress);
+            if (data.status) setStatus(data.status);
           } else {
             // Self-healing: Jika dokumen pendaftar belum ada (karena error rules sebelumnya), buatkan otomatis
             const { setDoc } = await import("firebase/firestore");
@@ -85,11 +90,31 @@ export default function DashboardPage() {
 
   const applicantName = user.displayName || userData?.name || user.email?.split('@')[0] || "Peserta";
   
+  const getStepStatus = (stepId: number) => {
+    if (stepId === 1) return progress.biodata ? 'completed' : 'current';
+    if (stepId === 2) {
+      if (progress.dokumen) return 'completed';
+      if (progress.biodata) return 'current';
+      return 'upcoming';
+    }
+    if (stepId === 3) {
+      if (progress.pembayaran) return 'completed';
+      if (progress.dokumen) return 'current';
+      return 'upcoming';
+    }
+    if (stepId === 4) {
+      if (status === 'lulus') return 'completed';
+      if (progress.pembayaran) return 'current';
+      return 'upcoming';
+    }
+    return 'upcoming';
+  };
+
   const steps = [
-    { id: 1, name: 'Biodata', status: 'completed', icon: FileText, href: '/dashboard/formulir' },
-    { id: 2, name: 'Upload Dokumen', status: 'current', icon: Upload, href: '/dashboard/dokumen' },
-    { id: 3, name: 'Pembayaran', status: 'upcoming', icon: CreditCard, href: '/dashboard/pembayaran' },
-    { id: 4, name: 'Verifikasi', status: 'upcoming', icon: CheckCircle, href: '#' },
+    { id: 1, name: 'Biodata', status: getStepStatus(1), icon: FileText, href: '/dashboard/formulir' },
+    { id: 2, name: 'Upload Dokumen', status: getStepStatus(2), icon: Upload, href: '/dashboard/dokumen' },
+    { id: 3, name: 'Pembayaran', status: getStepStatus(3), icon: CreditCard, href: '/dashboard/pembayaran' },
+    { id: 4, name: 'Verifikasi', status: getStepStatus(4), icon: CheckCircle, href: '#' },
   ];
 
   return (
@@ -130,11 +155,17 @@ export default function DashboardPage() {
                 <div>
                   <h3 className="font-semibold text-white">Langkah Selanjutnya</h3>
                   <p className="text-sm text-green-50 mt-1">
-                    Anda perlu mengunggah dokumen kelengkapan berupa Foto, KTP/KK, dan Ijazah/SKL sebelum melanjutkan ke tahap pembayaran.
+                    {!progress.biodata ? "Silakan isi formulir biodata lengkap Anda." :
+                     !progress.dokumen ? "Anda perlu mengunggah dokumen kelengkapan berupa Foto, KTP/KK, dan Ijazah/SKL." :
+                     !progress.pembayaran ? "Selesaikan pendaftaran dengan melampirkan bukti pembayaran PMB." :
+                     status === 'lulus' ? "Selamat! Pendaftaran Anda telah diverifikasi dan dinyatakan Lulus." :
+                     "Mohon tunggu. Dokumen dan pembayaran Anda sedang diverifikasi oleh panitia."}
                   </p>
-                  <Link href="/dashboard/dokumen" className="inline-block mt-3 bg-white text-green-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-50 transition">
-                    Unggah Dokumen Sekarang
-                  </Link>
+                  {!progress.pembayaran && status !== 'lulus' && (
+                    <Link href={!progress.biodata ? "/dashboard/formulir" : !progress.dokumen ? "/dashboard/dokumen" : "/dashboard/pembayaran"} className="inline-block mt-3 bg-white text-green-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-50 transition">
+                      Lanjutkan Proses
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
