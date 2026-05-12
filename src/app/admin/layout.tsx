@@ -9,7 +9,8 @@ import {
   FileCheck, 
   CreditCard, 
   LogOut,
-  Settings
+  Settings,
+  Search
 } from "lucide-react";
 
 import { useAuth } from "@/context/AuthContext";
@@ -46,7 +47,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const menuItems = [
     { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
     { name: "Data Pendaftar", icon: Users, href: "/admin/pendaftar" },
-    // { name: "Pengaturan", icon: Settings, href: "/admin/settings" },
+    { name: "Scan QR Ujian", icon: Search, href: "/admin/scan" },
   ];
 
   if (loading || !userData || userData.role !== 'admin') {

@@ -166,6 +166,11 @@ export default function DashboardPage() {
                       Lanjutkan Proses
                     </Link>
                   )}
+                  {status === 'lulus' && (
+                    <Link href="/dashboard/kartu-ujian" className="inline-block mt-3 bg-yellow-400 text-yellow-900 px-6 py-2 rounded-md text-sm font-bold hover:bg-yellow-300 transition shadow-sm">
+                      Cetak Kartu Ujian
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

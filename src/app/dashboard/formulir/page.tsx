@@ -214,20 +214,24 @@ export default function FormulirPage() {
                       <label className="block text-sm font-bold text-green-900 mb-2">Pilihan Program Studi 1</label>
                       <select name="prodi1" required className="w-full border-green-200 rounded-md shadow-sm focus:ring-green-600 focus:border-green-600 py-2.5 px-3 border bg-white">
                         <option value="">Pilih prodi prioritas...</option>
-                        <option value="S1-TI">S1 Teknik Informatika</option>
-                        <option value="S1-SI">S1 Sistem Informasi</option>
-                        <option value="S1-M">S1 Manajemen</option>
-                        <option value="S1-A">S1 Akuntansi</option>
+                        <option value="S1-PBSI">S1 Pend. Bahasa & Sastra Indonesia</option>
+                        <option value="S1-PGSD">S1 Pend. Guru Sekolah Dasar (PGSD)</option>
+                        <option value="S1-PMAT">S1 Pendidikan Matematika</option>
+                        <option value="S1-PEKO">S1 Pendidikan Ekonomi</option>
+                        <option value="S1-PPKN">S1 Pend. Pancasila & Kewarganegaraan</option>
+                        <option value="S1-HKM">S1 Ilmu Hukum</option>
                       </select>
                     </div>
                     <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                       <label className="block text-sm font-bold text-slate-700 mb-2">Pilihan Program Studi 2</label>
                       <select name="prodi2" required className="w-full border-slate-300 rounded-md shadow-sm focus:ring-slate-500 focus:border-slate-500 py-2.5 px-3 border bg-white">
                         <option value="">Pilih prodi cadangan...</option>
-                        <option value="S1-TI">S1 Teknik Informatika</option>
-                        <option value="S1-SI">S1 Sistem Informasi</option>
-                        <option value="S1-M">S1 Manajemen</option>
-                        <option value="S1-A">S1 Akuntansi</option>
+                        <option value="S1-PBSI">S1 Pend. Bahasa & Sastra Indonesia</option>
+                        <option value="S1-PGSD">S1 Pend. Guru Sekolah Dasar (PGSD)</option>
+                        <option value="S1-PMAT">S1 Pendidikan Matematika</option>
+                        <option value="S1-PEKO">S1 Pendidikan Ekonomi</option>
+                        <option value="S1-PPKN">S1 Pend. Pancasila & Kewarganegaraan</option>
+                        <option value="S1-HKM">S1 Ilmu Hukum</option>
                       </select>
                     </div>
                   </div>
