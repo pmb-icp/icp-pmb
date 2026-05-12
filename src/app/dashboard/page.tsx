@@ -26,10 +26,14 @@ export default function DashboardPage() {
   const [status, setStatus] = useState("draft");
   
   useEffect(() => {
-    if (!loading && !user) {
-      router.push("/login");
+    if (!loading) {
+      if (!user) {
+        router.push("/login");
+      } else if (userData && userData.role === 'admin') {
+        router.push("/admin");
+      }
     }
-  }, [user, loading, router]);
+  }, [user, userData, loading, router]);
 
   useEffect(() => {
     const fetchApplicantData = async () => {
