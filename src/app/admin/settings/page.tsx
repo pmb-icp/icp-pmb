@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, query, where, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { Settings, Save, Calendar, Users, DollarSign, Clock } from "lucide-react";
+import { Settings, Save, Calendar, Users, DollarSign, Clock, ShieldCheck, Search, Loader2 } from "lucide-react";
 
 export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(false);
@@ -21,6 +21,11 @@ export default function AdminSettingsPage() {
     announcementDate: "2026-05-15",
     isRegistrationOpen: true
   });
+
+  const [searchEmail, setSearchEmail] = useState("");
+  const [searchingUser, setSearchingUser] = useState(false);
+  const [foundUser, setFoundUser] = useState<any>(null);
+  const [searchError, setSearchError] = useState("");
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -68,6 +73,48 @@ export default function AdminSettingsPage() {
       }
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleSearchUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchEmail.trim()) return;
+
+    setSearchingUser(true);
+    setSearchError("");
+    setFoundUser(null);
+
+    try {
+      const usersRef = collection(db, "users");
+      const q = query(usersRef, where("email", "==", searchEmail.trim()));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        setSearchError("Pengguna dengan email tersebut tidak ditemukan. Pastikan mereka sudah mendaftar.");
+      } else {
+        const userData = querySnapshot.docs[0].data();
+        setFoundUser(userData);
+      }
+    } catch (error) {
+      console.error("Error searching user:", error);
+      setSearchError("Gagal mencari pengguna.");
+    } finally {
+      setSearchingUser(false);
+    }
+  };
+
+  const handleChangeRole = async (newRole: string) => {
+    if (!foundUser) return;
+    
+    try {
+      await updateDoc(doc(db, "users", foundUser.uid), {
+        role: newRole
+      });
+      setFoundUser({ ...foundUser, role: newRole });
+      alert(`Berhasil! Akses pengguna diubah menjadi: ${newRole.toUpperCase()}`);
+    } catch (error) {
+      console.error("Error updating role:", error);
+      alert("Gagal mengubah hak akses.");
     }
   };
 
@@ -237,6 +284,70 @@ export default function AdminSettingsPage() {
               />
               <p className="text-xs text-slate-500 mt-2">Jadwal tayang hasil kelulusan di dashboard peserta.</p>
             </div>
+          </div>
+        </div>
+
+        {/* Manajemen Admin */}
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
+          <h2 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
+            <ShieldCheck className="w-5 h-5 text-green-600" />
+            Manajemen Akses Admin
+          </h2>
+          <p className="text-sm text-slate-500 mb-6">Angkat staf kampus menjadi Admin agar mereka bisa mengakses dasbor ini.</p>
+          
+          <div className="bg-slate-50 p-6 rounded-xl border border-slate-200">
+            <form onSubmit={handleSearchUser} className="flex gap-4 mb-6">
+              <div className="relative flex-1">
+                <Search className="w-5 h-5 absolute left-3 top-2.5 text-slate-400" />
+                <input 
+                  type="email" 
+                  value={searchEmail}
+                  onChange={(e) => setSearchEmail(e.target.value)}
+                  placeholder="Masukkan email yang sudah terdaftar..." 
+                  className="w-full pl-10 border-slate-300 rounded-lg p-2.5 border"
+                  required
+                />
+              </div>
+              <button 
+                type="submit" 
+                disabled={searchingUser}
+                className="bg-slate-900 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-slate-800 transition disabled:opacity-50"
+              >
+                {searchingUser ? <Loader2 className="w-5 h-5 animate-spin" /> : "Cari Akun"}
+              </button>
+            </form>
+
+            {searchError && <p className="text-red-500 text-sm mb-4">{searchError}</p>}
+
+            {foundUser && (
+              <div className="bg-white border border-green-200 rounded-xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                  <h3 className="font-bold text-slate-900">{foundUser.name || "Tanpa Nama"}</h3>
+                  <p className="text-slate-500 text-sm">{foundUser.email}</p>
+                  <p className="text-xs mt-2">
+                    Status saat ini: <span className={`font-bold uppercase ${foundUser.role === 'admin' ? 'text-green-600' : 'text-slate-600'}`}>{foundUser.role}</span>
+                  </p>
+                </div>
+                
+                <div className="flex gap-3 w-full md:w-auto">
+                  {foundUser.role === 'admin' ? (
+                    <button 
+                      onClick={() => handleChangeRole('applicant')}
+                      className="w-full md:w-auto bg-red-50 text-red-700 border border-red-200 px-4 py-2 rounded-lg font-medium hover:bg-red-100 transition"
+                    >
+                      Cabut Akses Admin
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => handleChangeRole('admin')}
+                      className="w-full md:w-auto bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition"
+                    >
+                      Jadikan Admin
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
