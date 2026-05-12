@@ -40,8 +40,8 @@ export default function PembayaranPage() {
     
     const file = e.target.files[0];
 
-    if (file.type === "application/pdf" && file.size > 800 * 1024) {
-      alert("Maaf, ukuran file PDF terlalu besar. Maksimal 800 KB.");
+    if (file.type === "application/pdf" && file.size > 700 * 1024) {
+      alert("Maaf, ukuran file PDF terlalu besar. Maksimal 700 KB.");
       return;
     }
 
@@ -72,9 +72,13 @@ export default function PembayaranPage() {
 
       setProofUploaded('uploaded');
       setUploading(false);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Gagal mengompres/menyimpan file:", error);
-      alert("Gagal mengunggah file. Pastikan ukurannya tidak terlalu besar.");
+      if (error.code === 'permission-denied') {
+        alert("Gagal menyimpan: Akses Database Ditolak (Permission Denied). Anda perlu memperbarui Firebase Firestore Rules untuk mengizinkan penulisan ke tabel 'applicant_files'.");
+      } else {
+        alert("Gagal mengunggah file. Kemungkinan ukuran file setelah dikonversi melebihi batas 1MB Firestore.");
+      }
       setUploading(false);
     }
   };

@@ -34,9 +34,9 @@ export default function UploadDokumenPage() {
     
     const file = e.target.files[0];
     
-    // Validasi ukuran PDF maks 800KB (karena Base64 akan memperbesar ukuran ~30%, dan limit Firestore 1MB)
-    if (file.type === "application/pdf" && file.size > 800 * 1024) {
-      alert("Maaf, ukuran file PDF terlalu besar. Maksimal 800 KB untuk menjaga kestabilan database gratis.");
+    // Validasi ukuran PDF maks 700KB (karena Base64 akan memperbesar ukuran ~33%, dan limit Firestore 1MB)
+    if (file.type === "application/pdf" && file.size > 700 * 1024) {
+      alert("Maaf, ukuran file PDF terlalu besar. Maksimal 700 KB untuk menjaga kestabilan database gratis.");
       return;
     }
 
@@ -69,9 +69,13 @@ export default function UploadDokumenPage() {
 
       setFiles(prev => ({ ...prev, [type]: true }));
       setUploading(null);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Gagal mengompres/menyimpan file:", error);
-      alert("Gagal mengunggah file. Pastikan ukurannya tidak terlalu besar.");
+      if (error.code === 'permission-denied') {
+        alert("Gagal menyimpan: Akses Database Ditolak (Permission Denied). Anda perlu memperbarui Firebase Firestore Rules untuk mengizinkan penulisan ke tabel 'applicant_files'.");
+      } else {
+        alert("Gagal mengunggah file. Kemungkinan ukuran file setelah dikonversi melebihi batas 1MB Firestore.");
+      }
       setUploading(null);
     }
   };
