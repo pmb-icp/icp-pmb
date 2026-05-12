@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BookOpen, Calendar, CheckCircle, MapPin, Phone } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, CheckCircle, MapPin, Phone, MessageCircle, ChevronDown, Award, Clock, DollarSign, HelpCircle } from "lucide-react";
 
 export default function Home() {
   return (
@@ -56,31 +56,165 @@ export default function Home() {
       {/* Features/Stats */}
       <section className="py-20 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Mengapa Memilih ICP?</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">Kami berkomitmen memberikan pendidikan terbaik dengan fasilitas modern dan biaya yang terjangkau bagi seluruh lapisan masyarakat.</p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
               <div className="w-16 h-16 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center mb-6">
                 <BookOpen className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Program Studi Unggulan</h3>
-              <p className="text-slate-600">Pilihan program studi terakreditasi dengan kurikulum relevan dengan kebutuhan industri saat ini.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Dosen Berkualitas</h3>
+              <p className="text-slate-600">Pengajar lulusan universitas terkemuka dengan pengalaman praktis di bidangnya.</p>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
               <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
-                <CheckCircle className="w-8 h-8" />
+                <Award className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Fasilitas Lengkap</h3>
-              <p className="text-slate-600">Didukung laboratorium modern, perpustakaan digital, dan lingkungan kampus yang nyaman.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Peluang Kerja & Beasiswa</h3>
+              <p className="text-slate-600">Jejaring alumni yang luas dan tersedia berbagai beasiswa (KIP Kuliah & Prestasi).</p>
             </div>
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
               <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
-                <Calendar className="w-8 h-8" />
+                <CheckCircle className="w-8 h-8" />
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Jadwal Fleksibel</h3>
-              <p className="text-slate-600">Tersedia kelas reguler dan kelas karyawan dengan jadwal kuliah yang dapat disesuaikan.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-3">Kampus Islami Modern</h3>
+              <p className="text-slate-600">Lingkungan akademik yang memadukan keilmuan modern dengan nilai-nilai religius.</p>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Program Studi */}
+      <section id="prodi" className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Program Studi Sarjana (S1)</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">Pilih dari 6 program studi unggulan yang telah terakreditasi dan dirancang untuk menjawab tantangan masa depan.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { name: "Pendidikan Bahasa dan Sastra Indonesia", akreditasi: "B", desc: "Mencetak pendidik profesional di bidang bahasa dan sastra nusantara." },
+              { name: "Pendidikan Guru Sekolah Dasar (PGSD)", akreditasi: "B", desc: "Program unggulan untuk calon pendidik generasi dasar yang kreatif." },
+              { name: "Pendidikan Matematika", akreditasi: "B", desc: "Melahirkan pengajar eksakta yang analitis, logis, dan inovatif." },
+              { name: "Pendidikan Ekonomi", akreditasi: "B", desc: "Mencetak pendidik dan praktisi ekonomi yang adaptif terhadap era digital." },
+              { name: "Pendidikan Pancasila & Kewarganegaraan", akreditasi: "B", desc: "Membentuk karakter bangsa melalui pendidik yang nasionalis." },
+              { name: "Ilmu Hukum", akreditasi: "B", desc: "Mencetak praktisi hukum yang adil, religius, dan berintegritas tinggi." }
+            ].map((prodi, i) => (
+              <div key={i} className="border border-slate-200 rounded-2xl p-6 hover:border-green-500 hover:shadow-lg transition-all group">
+                <div className="flex justify-between items-start mb-4">
+                  <div className="bg-green-50 text-green-700 px-3 py-1 rounded-md text-sm font-bold border border-green-100">S1</div>
+                  <div className="flex items-center gap-1 text-xs font-semibold text-yellow-600 bg-yellow-50 px-2 py-1 rounded-md">
+                    <Award className="w-3 h-3" /> Akreditasi {prodi.akreditasi}
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-green-700 transition-colors">{prodi.name}</h3>
+                <p className="text-slate-600 text-sm mb-6">{prodi.desc}</p>
+                <Link href="/register" className="text-green-700 font-semibold text-sm flex items-center gap-1 hover:gap-2 transition-all">
+                  Daftar Prodi Ini <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Jalur & Timeline */}
+      <section id="jalur" className="py-20 bg-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            
+            {/* Jalur Pendaftaran */}
+            <div>
+              <h2 className="text-3xl font-bold mb-8">Jalur Pendaftaran</h2>
+              <div className="space-y-4">
+                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-green-400 mb-2">Jalur Reguler</h3>
+                  <p className="text-slate-400 text-sm">Jalur umum bagi lulusan SMA/SMK/MA sederajat tanpa batasan tahun kelulusan dengan seleksi tes tertulis/CBT.</p>
+                </div>
+                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-yellow-400 mb-2">Jalur Prestasi</h3>
+                  <p className="text-slate-400 text-sm">Jalur bebas tes bagi siswa peringkat 1-10 di sekolah atau memiliki prestasi non-akademik tingkat Kabupaten/Provinsi.</p>
+                </div>
+                <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                  <h3 className="text-xl font-bold text-blue-400 mb-2">Jalur KIP Kuliah</h3>
+                  <p className="text-slate-400 text-sm">Jalur beasiswa penuh dari pemerintah bagi calon mahasiswa berprestasi yang memiliki keterbatasan ekonomi.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Timeline */}
+            <div>
+              <h2 className="text-3xl font-bold mb-8">Jadwal Seleksi (Timeline)</h2>
+              <div className="relative border-l-2 border-slate-700 ml-4 space-y-8 pb-4">
+                <div className="relative pl-8">
+                  <div className="absolute w-4 h-4 bg-green-500 rounded-full -left-[9px] top-1 ring-4 ring-slate-900"></div>
+                  <h4 className="text-lg font-bold text-white">Gelombang 1 Dibuka</h4>
+                  <p className="text-green-400 text-sm mb-1">1 Februari - 30 April 2026</p>
+                  <p className="text-slate-400 text-sm">Pendaftaran online, pengisian biodata, dan unggah berkas.</p>
+                </div>
+                <div className="relative pl-8">
+                  <div className="absolute w-4 h-4 bg-slate-600 rounded-full -left-[9px] top-1 ring-4 ring-slate-900"></div>
+                  <h4 className="text-lg font-bold text-white">Tes Seleksi Berbasis Komputer</h4>
+                  <p className="text-green-400 text-sm mb-1">10 Mei 2026</p>
+                  <p className="text-slate-400 text-sm">Bagi peserta jalur Reguler. Jalur Prestasi dan KIP langsung wawancara.</p>
+                </div>
+                <div className="relative pl-8">
+                  <div className="absolute w-4 h-4 bg-slate-600 rounded-full -left-[9px] top-1 ring-4 ring-slate-900"></div>
+                  <h4 className="text-lg font-bold text-white">Pengumuman Kelulusan</h4>
+                  <p className="text-green-400 text-sm mb-1">15 Mei 2026</p>
+                  <p className="text-slate-400 text-sm">Diumumkan secara online melalui dashboard akun masing-masing.</p>
+                </div>
+                <div className="relative pl-8">
+                  <div className="absolute w-4 h-4 bg-slate-600 rounded-full -left-[9px] top-1 ring-4 ring-slate-900"></div>
+                  <h4 className="text-lg font-bold text-white">Daftar Ulang</h4>
+                  <p className="text-green-400 text-sm mb-1">16 - 31 Mei 2026</p>
+                  <p className="text-slate-400 text-sm">Pembayaran UKT semester pertama dan pemberkasan fisik.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Biaya Kuliah */}
+      <section id="biaya" className="py-20 bg-slate-50 border-t border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-slate-900 mb-4">Biaya Pendidikan</h2>
+          <p className="text-slate-600 mb-12">Institut Cokroaminoto Pinrang menerapkan sistem Uang Kuliah Tunggal (UKT) yang terjangkau tanpa biaya gedung atau pungutan tersembunyi lainnya.</p>
+          
+          <div className="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden max-w-2xl mx-auto">
+            <div className="bg-green-700 p-8 text-white">
+              <DollarSign className="w-12 h-12 mx-auto mb-4 opacity-80" />
+              <h3 className="text-2xl font-bold mb-2">Uang Kuliah Tunggal (UKT)</h3>
+              <div className="flex justify-center items-baseline gap-2">
+                <span className="text-4xl font-extrabold">Rp 2.500.000</span>
+                <span className="text-green-200">/ semester</span>
+              </div>
+            </div>
+            <div className="p-8">
+              <ul className="space-y-4 text-left">
+                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Sudah termasuk biaya SKS dan Praktikum.</li>
+                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Bebas Uang Pangkal / Uang Gedung.</li>
+                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Biaya pendaftaran awal hanya Rp 250.000.</li>
+                <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Tersedia opsi cicilan per bulan bagi yang membutuhkan.</li>
+              </ul>
+              <div className="mt-8 pt-8 border-t border-slate-100">
+                <Link href="/register" className="block w-full py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition shadow-md">
+                  Daftar Sekarang
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Floating WhatsApp */}
+      <a href="https://wa.me/6281122334455" target="_blank" rel="noreferrer" className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center justify-center">
+        <MessageCircle className="w-8 h-8" />
+      </a>
 
       {/* Footer */}
       <footer className="mt-auto bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
