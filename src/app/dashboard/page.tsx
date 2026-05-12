@@ -127,10 +127,10 @@ export default function DashboardPage() {
       <nav className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
-            <div className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition cursor-pointer">
               <Image src="/logo.png" alt="Logo ICP" width={32} height={32} className="object-contain" />
               <span className="font-bold text-xl text-slate-900 tracking-tight">Dashboard Peserta</span>
-            </div>
+            </Link>
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium text-slate-700 hidden sm:block">Halo, {applicantName}</span>
               <button onClick={handleLogout} className="flex items-center gap-2 text-sm text-red-600 hover:bg-red-50 px-3 py-2 rounded-md transition cursor-pointer">

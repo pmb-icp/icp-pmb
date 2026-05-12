@@ -8,11 +8,12 @@ export default function Home() {
       {/* Navbar */}
       <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition cursor-pointer">
             <Image src="/logo.png" alt="Logo ICP" width={36} height={36} className="object-contain" />
             <span className="font-bold text-xl text-slate-900 tracking-tight">PMB ICP</span>
-          </div>
+          </Link>
           <nav className="hidden md:flex gap-6">
+            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Beranda</Link>
             <Link href="#prodi" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Program Studi</Link>
             <Link href="#jalur" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Jalur Masuk</Link>
             <Link href="#biaya" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Biaya Kuliah</Link>

@@ -59,7 +59,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-slate-50 flex">
       {/* Sidebar */}
       <aside className="w-64 bg-slate-900 text-white flex flex-col hidden md:flex fixed h-full z-20">
-        <div className="p-6 border-b border-slate-800 flex items-center gap-3">
+        <Link href="/" className="p-6 border-b border-slate-800 flex items-center gap-3 hover:bg-slate-800 transition cursor-pointer">
           <div className="bg-white p-1 rounded-md">
             <Image src="/logo.png" alt="Logo ICP" width={32} height={32} className="object-contain" />
           </div>
@@ -67,7 +67,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <span className="font-bold text-lg block leading-none">Admin PMB</span>
             <span className="text-xs text-slate-400">Institut Cokroaminoto</span>
           </div>
-        </div>
+        </Link>
         
         <nav className="flex-1 py-6 px-4 space-y-1 overflow-y-auto">
           {menuItems.map((item) => {
@@ -101,12 +101,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <main className="flex-1 md:ml-64 flex flex-col min-h-screen">
         {/* Top Header Mobile */}
         <header className="md:hidden bg-slate-900 text-white p-4 flex items-center justify-between sticky top-0 z-20">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <div className="bg-white p-1 rounded-md">
               <Image src="/logo.png" alt="Logo ICP" width={24} height={24} className="object-contain" />
             </div>
             <span className="font-bold text-lg">Admin PMB</span>
-          </div>
+          </Link>
           <button className="p-2 bg-slate-800 rounded-md">
             <LayoutDashboard className="w-5 h-5" />
           </button>
