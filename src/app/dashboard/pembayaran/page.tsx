@@ -4,9 +4,9 @@ import Link from "next/link";
 import { ArrowLeft, Copy, CreditCard, Building, UploadCloud, Info, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { storage, db } from "@/lib/firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
+import { compressImage, fileToBase64 } from "@/lib/fileUtils";
 
 export default function PembayaranPage() {
   const { user } = useAuth();
@@ -39,54 +39,43 @@ export default function PembayaranPage() {
     if (!e.target.files || e.target.files.length === 0 || !user) return;
     
     const file = e.target.files[0];
+
+    if (file.type === "application/pdf" && file.size > 800 * 1024) {
+      alert("Maaf, ukuran file PDF terlalu besar. Maksimal 800 KB.");
+      return;
+    }
+
     setUploading(true);
     
-    const fallbackURL = `https://dummyimage.com/600x400/0ea5e9/ffffff&text=Bukti+Transfer+Tersimpan`;
-
-    const completeUpload = async (url: string) => {
-      setProofUploaded(url);
-      try {
-        await updateDoc(doc(db, "applicants", user.uid), {
-          paymentProof: url,
-          "progress.pembayaran": true,
-          status: "verifikasi"
-        });
-      } catch (err) {
-        console.error("Gagal update Firestore:", err);
-      }
-      setUploading(false);
-    };
-
     try {
-      const storageRef = ref(storage, `payments/${user.uid}/bukti_transfer_${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      
-      const timeoutId = setTimeout(() => {
-        uploadTask.cancel();
-        console.warn("Upload timeout: Firebase Storage mungkin belum diaktifkan. Menggunakan fallback.");
-        completeUpload(fallbackURL);
-      }, 15000);
-      
-      uploadTask.on('state_changed', 
-        null, 
-        (error) => {
-          clearTimeout(timeoutId);
-          console.error("Upload error (Storage rules/config):", error);
-          completeUpload(fallbackURL);
-        }, 
-        async () => {
-          clearTimeout(timeoutId);
-          try {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            completeUpload(downloadURL);
-          } catch (err) {
-            completeUpload(fallbackURL);
-          }
-        }
-      );
+      let base64Data = "";
+      if (file.type.startsWith("image/")) {
+        base64Data = await compressImage(file);
+      } else {
+        base64Data = await fileToBase64(file);
+      }
+
+      await setDoc(doc(db, "applicant_files", `${user.uid}_payment`), {
+        uid: user.uid,
+        type: 'payment',
+        fileName: file.name,
+        fileType: file.type,
+        data: base64Data,
+        uploadedAt: new Date()
+      });
+
+      await updateDoc(doc(db, "applicants", user.uid), {
+        paymentProof: true,
+        "progress.pembayaran": true,
+        status: "verifikasi"
+      });
+
+      setProofUploaded('uploaded');
+      setUploading(false);
     } catch (error) {
-      console.error("Storage Initialization Error:", error);
-      completeUpload(fallbackURL);
+      console.error("Gagal mengompres/menyimpan file:", error);
+      alert("Gagal mengunggah file. Pastikan ukurannya tidak terlalu besar.");
+      setUploading(false);
     }
   };
 

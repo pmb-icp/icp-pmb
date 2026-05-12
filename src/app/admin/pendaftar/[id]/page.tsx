@@ -2,7 +2,7 @@
 
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, User, FileText, CheckCircle, XCircle, File, Download } from "lucide-react";
+import { ArrowLeft, User, FileText, CheckCircle, XCircle, File, Download, Loader2 } from "lucide-react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -10,6 +10,8 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
   const resolvedParams = use(params);
   const [applicant, setApplicant] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [files, setFiles] = useState<any>({});
+  const [loadingFiles, setLoadingFiles] = useState(true);
 
   useEffect(() => {
     const fetchApplicant = async () => {
@@ -17,11 +19,24 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
         const docSnap = await getDoc(doc(db, "applicants", resolvedParams.id));
         if (docSnap.exists()) {
           setApplicant({ id: docSnap.id, ...docSnap.data() });
+          
+          // Fetch files
+          const types = ['foto', 'kk', 'ijazah', 'payment'];
+          const loadedFiles: any = {};
+          
+          for (const type of types) {
+            const fileSnap = await getDoc(doc(db, "applicant_files", `${resolvedParams.id}_${type}`));
+            if (fileSnap.exists()) {
+              loadedFiles[type] = fileSnap.data().data; // This is the base64 string
+            }
+          }
+          setFiles(loadedFiles);
         }
       } catch (error) {
         console.error("Error fetching applicant:", error);
       } finally {
         setLoading(false);
+        setLoadingFiles(false);
       }
     };
     fetchApplicant();
@@ -143,8 +158,8 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                     </div>
                     <div>
                       <p className="font-medium text-sm text-slate-900">Pas Foto</p>
-                      {d.foto ? (
-                        <a href={d.foto} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline">Lihat file</a>
+                      {loadingFiles ? <Loader2 className="w-3 h-3 animate-spin mt-1" /> : files.foto ? (
+                        <a href={files.foto} download={`Foto_${b.namaLengkap}.jpg`} className="text-xs text-blue-600 hover:underline">Download file</a>
                       ) : (
                         <span className="text-xs text-red-500">Belum diunggah</span>
                       )}
@@ -162,8 +177,8 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                     </div>
                     <div>
                       <p className="font-medium text-sm text-slate-900">Kartu Keluarga</p>
-                      {d.kk ? (
-                        <a href={d.kk} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline">Lihat file</a>
+                      {loadingFiles ? <Loader2 className="w-3 h-3 animate-spin mt-1" /> : files.kk ? (
+                        <a href={files.kk} download={`KK_${b.namaLengkap}.pdf`} className="text-xs text-blue-600 hover:underline">Download file</a>
                       ) : (
                         <span className="text-xs text-red-500">Belum diunggah</span>
                       )}
@@ -181,8 +196,8 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                     </div>
                     <div>
                       <p className="font-medium text-sm text-slate-900">Ijazah / SKL</p>
-                      {d.ijazah ? (
-                        <a href={d.ijazah} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline">Lihat file</a>
+                      {loadingFiles ? <Loader2 className="w-3 h-3 animate-spin mt-1" /> : files.ijazah ? (
+                        <a href={files.ijazah} download={`Ijazah_${b.namaLengkap}.pdf`} className="text-xs text-blue-600 hover:underline">Download file</a>
                       ) : (
                         <span className="text-xs text-red-500">Belum diunggah</span>
                       )}
@@ -204,8 +219,8 @@ export default function DetailPendaftarPage({ params }: { params: Promise<{ id: 
                 </div>
                 <div>
                   <p className="font-medium text-sm text-slate-900">Bukti Transfer BSI</p>
-                  {applicant.paymentProof ? (
-                    <a href={applicant.paymentProof} target="_blank" rel="noreferrer" className="text-xs text-blue-600 hover:underline mt-1 block">Lihat file bukti transfer</a>
+                  {loadingFiles ? <Loader2 className="w-3 h-3 animate-spin mt-1" /> : files.payment ? (
+                    <a href={files.payment} download={`BuktiBayar_${b.namaLengkap}.jpg`} className="text-xs text-blue-600 hover:underline mt-1 block">Download file bukti transfer</a>
                   ) : (
                     <p className="text-xs text-red-500 mt-1">Belum melakukan pembayaran</p>
                   )}

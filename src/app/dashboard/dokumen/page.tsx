@@ -4,9 +4,9 @@ import Link from "next/link";
 import { ArrowLeft, UploadCloud, File, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { storage, db } from "@/lib/firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
+import { compressImage, fileToBase64 } from "@/lib/fileUtils";
 
 export default function UploadDokumenPage() {
   const { user } = useAuth();
@@ -33,59 +33,46 @@ export default function UploadDokumenPage() {
     if (!e.target.files || e.target.files.length === 0 || !user) return;
     
     const file = e.target.files[0];
+    
+    // Validasi ukuran PDF maks 800KB (karena Base64 akan memperbesar ukuran ~30%, dan limit Firestore 1MB)
+    if (file.type === "application/pdf" && file.size > 800 * 1024) {
+      alert("Maaf, ukuran file PDF terlalu besar. Maksimal 800 KB untuk menjaga kestabilan database gratis.");
+      return;
+    }
+
     setUploading(type);
     
-    // Fallback URL in case Firebase Storage is not enabled or errors out
-    const fallbackURL = `https://dummyimage.com/600x400/16a34a/ffffff&text=Dokumen+${type}+Tersimpan`;
-
-    const completeUpload = async (url: string) => {
-      setFiles(prev => ({ ...prev, [type]: url }));
-      try {
-        await updateDoc(doc(db, "applicants", user.uid), {
-          [`documents.${type}`]: url,
-          "progress.dokumen": true,
-          status: "pembayaran"
-        });
-      } catch (err) {
-        console.error("Gagal update Firestore:", err);
-      }
-      setUploading(null);
-    };
-
     try {
-      const storageRef = ref(storage, `documents/${user.uid}/${type}_${file.name}`);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      
-      // Fallback timer: if upload takes longer than 15 seconds, assume Storage is not configured
-      const timeoutId = setTimeout(() => {
-        uploadTask.cancel();
-        console.warn("Upload timeout: Firebase Storage mungkin belum diaktifkan. Menggunakan fallback.");
-        completeUpload(fallbackURL);
-      }, 15000);
+      let base64Data = "";
+      if (file.type.startsWith("image/")) {
+        base64Data = await compressImage(file);
+      } else {
+        base64Data = await fileToBase64(file);
+      }
 
-      uploadTask.on('state_changed', 
-        (snapshot) => {
-          // Progress can be tracked here
-        }, 
-        (error) => {
-          clearTimeout(timeoutId);
-          console.error("Upload error (Storage rules/config):", error);
-          console.warn("Menggunakan fallback simulasi upload.");
-          completeUpload(fallbackURL); // Lanjutkan secara visual agar sistem tidak macet
-        }, 
-        async () => {
-          clearTimeout(timeoutId);
-          try {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            completeUpload(downloadURL);
-          } catch (err) {
-            completeUpload(fallbackURL);
-          }
-        }
-      );
+      // Simpan Base64 ke collection terpisah 'applicant_files' agar tidak memberatkan collection utama 'applicants'
+      await setDoc(doc(db, "applicant_files", `${user.uid}_${type}`), {
+        uid: user.uid,
+        type: type,
+        fileName: file.name,
+        fileType: file.type,
+        data: base64Data,
+        uploadedAt: new Date()
+      });
+
+      // Update status di collection 'applicants'
+      await updateDoc(doc(db, "applicants", user.uid), {
+        [`documents.${type}`]: true,
+        "progress.dokumen": true,
+        status: "pembayaran"
+      });
+
+      setFiles(prev => ({ ...prev, [type]: true }));
+      setUploading(null);
     } catch (error) {
-      console.error("Storage Initialization Error:", error);
-      completeUpload(fallbackURL);
+      console.error("Gagal mengompres/menyimpan file:", error);
+      alert("Gagal mengunggah file. Pastikan ukurannya tidak terlalu besar.");
+      setUploading(null);
     }
   };
 
