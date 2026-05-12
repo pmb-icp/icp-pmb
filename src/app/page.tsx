@@ -28,38 +28,66 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center pt-24 pb-32 px-4 text-center overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-green-50 via-white to-white"></div>
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-700 text-sm font-medium mb-8">
-          <span className="flex h-2 w-2 rounded-full bg-yellow-500 animate-pulse"></span>
-          Pendaftaran Gelombang 1 Dibuka
-        </div>
-        <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 max-w-4xl">
-          Raih Masa Depan Gemilang di <br className="hidden md:block"/>
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-emerald-600">
-            Institut Cokroaminoto Pinrang
-          </span>
-        </h1>
-        <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl">
-          Sistem Penerimaan Mahasiswa Baru yang modern, mudah, dan cepat. Jadilah bagian dari generasi unggul pemimpin masa depan.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <Link href="/register" className="flex items-center justify-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold text-lg hover:bg-green-800 hover:-translate-y-0.5 transition-all shadow-lg hover:shadow-green-700/30">
-            Mulai Pendaftaran
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-          <Link href="/panduan" className="flex items-center justify-center gap-2 px-8 py-4 bg-white text-slate-700 rounded-full font-semibold text-lg border border-slate-200 hover:bg-slate-50 hover:-translate-y-0.5 transition-all shadow-sm">
-            Panduan PMB
-          </Link>
+      <section className="relative pt-24 pb-20 md:pt-32 md:pb-32 overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-50 via-white to-white"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-50 border border-yellow-200 text-yellow-700 text-sm font-medium mb-8">
+                <span className="flex h-2 w-2 rounded-full bg-yellow-500 animate-pulse"></span>
+                Pendaftaran Gelombang 1 Dibuka
+              </div>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 tracking-tight mb-6 max-w-4xl lg:max-w-none mx-auto lg:mx-0">
+                Raih Masa Depan Gemilang di <br className="hidden lg:block"/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-700 to-emerald-600">
+                  Institut Cokroaminoto Pinrang
+                </span>
+              </h1>
+              <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto lg:mx-0">
+                Sistem Penerimaan Mahasiswa Baru yang modern, mudah, dan cepat. Jadilah bagian dari generasi unggul pemimpin masa depan.
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                <Link href="/register" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-green-700 text-white rounded-full font-semibold text-lg hover:bg-green-800 hover:-translate-y-0.5 transition-all shadow-lg hover:shadow-green-700/30">
+                  Mulai Pendaftaran
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link href="/panduan" className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-white text-slate-700 rounded-full font-semibold text-lg border border-slate-200 hover:bg-slate-50 hover:-translate-y-0.5 transition-all shadow-sm">
+                  Panduan PMB
+                </Link>
+              </div>
+            </div>
+            
+            {/* Hero Image */}
+            <div className="flex-1 w-full max-w-2xl lg:max-w-none relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-green-100 to-emerald-100 rounded-3xl blur-2xl opacity-50 -z-10"></div>
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform hover:-translate-y-1 transition-transform duration-500">
+                <img src="/hero-students.png" alt="Mahasiswa Baru ICP" className="w-full h-auto object-cover" />
+                <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-white/20 flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-bold text-slate-900">Bergabung Bersama Kami</p>
+                    <p className="text-xs text-slate-500">Ribuan alumni sukses menanti Anda.</p>
+                  </div>
+                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold">
+                    ICP
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Features/Stats */}
       <section className="py-20 bg-slate-50 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-slate-900 mb-4">Keunggulan & Fasilitas Kampus</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">Visi: "Menjadi Perguruan Tinggi unggul dan berdaya saing di bidang Ilmu Hukum, Keguruan dan Ilmu Pendidikan di tingkat Nasional tahun 2027"</p>
+          <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
+            <div className="flex-1">
+              <h2 className="text-3xl font-bold text-slate-900 mb-4">Keunggulan & Fasilitas Kampus</h2>
+              <p className="text-slate-600 max-w-2xl">Visi: "Menjadi Perguruan Tinggi unggul dan berdaya saing di bidang Ilmu Hukum, Keguruan dan Ilmu Pendidikan di tingkat Nasional tahun 2027"</p>
+            </div>
+            <div className="w-full md:w-1/3 rounded-2xl overflow-hidden shadow-lg border-2 border-white transform hover:scale-105 transition duration-500">
+              <img src="/campus-facility.png" alt="Fasilitas Kampus" className="w-full h-48 object-cover" />
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center text-center hover:shadow-md transition-shadow">
