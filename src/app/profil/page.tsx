@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowLeft, MapPin, Phone, MessageCircle } from 'lucide-react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, Title } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
 
@@ -42,8 +43,8 @@ export default function ProfilPage() {
     datasets: [{
       data: [40, 60],
       backgroundColor: [
-        '#f59e0b', // amber-500
-        '#059669', // emerald-600
+        '#eab308', // yellow-500
+        '#16a34a', // green-600
       ],
       borderWidth: 2,
       borderColor: '#ffffff'
@@ -65,13 +66,13 @@ export default function ProfilPage() {
       {
         label: 'Eks-STKIP / FKIP',
         data: [350, 320, 480, 550],
-        backgroundColor: '#059669',
+        backgroundColor: '#16a34a',
         borderRadius: 4
       },
       {
         label: 'Eks-STIH / FH',
         data: [200, 190, 310, 400],
-        backgroundColor: '#f59e0b',
+        backgroundColor: '#eab308',
         borderRadius: 4
       }
     ]
@@ -88,52 +89,48 @@ export default function ProfilPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-emerald-200">
-      {/* Navigation */}
-      <nav className="bg-white shadow-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-20 items-center">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 bg-emerald-800 rounded-full flex items-center justify-center text-white font-bold text-xl group-hover:scale-105 transition-transform">
-                ICP
-              </div>
-              <span className="font-bold text-xl text-emerald-900 leading-tight hidden sm:block">
-                INSTITUT COKROAMINOTO<br/><span className="text-sm text-emerald-600 font-medium">PINRANG</span>
-              </span>
+    <div className="min-h-screen bg-slate-50 text-slate-800 font-sans selection:bg-green-200">
+      {/* Navbar */}
+      <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+          <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition cursor-pointer">
+            <Image src="/logo.png" alt="Logo ICP" width={36} height={36} className="object-contain" />
+            <span className="font-bold text-xl text-slate-900 tracking-tight">PMB ICP</span>
+          </Link>
+          <nav className="hidden md:flex gap-6">
+            <Link href="/" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Beranda</Link>
+            <Link href="/profil" className="text-sm font-medium text-green-600 font-bold transition">Profil Kampus</Link>
+            <Link href="/#prodi" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Program Studi</Link>
+            <Link href="/#jalur" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Jalur Masuk</Link>
+            <Link href="/#biaya" className="text-sm font-medium text-slate-600 hover:text-green-600 transition">Biaya Kuliah</Link>
+          </nav>
+          <div className="flex items-center gap-4">
+            <Link href="/login" className="text-sm font-medium text-slate-700 hover:text-slate-900">Masuk</Link>
+            <Link href="/register" className="text-sm font-medium bg-green-700 text-white px-4 py-2 rounded-full hover:bg-green-800 transition shadow-sm hover:shadow-md">
+              Daftar Sekarang
             </Link>
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#transformasi" className="text-slate-600 hover:text-emerald-600 font-medium transition-colors">Transformasi</a>
-              <a href="#akademik" className="text-slate-600 hover:text-emerald-600 font-medium transition-colors">Fakultas</a>
-              <a href="#data" className="text-slate-600 hover:text-emerald-600 font-medium transition-colors">Data Kampus</a>
-              <Link href="/register" className="bg-amber-500 hover:bg-amber-600 text-white px-5 py-2 rounded-full font-bold transition-colors shadow-sm">Pendaftaran</Link>
-            </div>
-            <div className="md:hidden">
-               <Link href="/" className="flex items-center gap-2 text-emerald-700 font-medium">
-                  <ArrowLeft className="w-5 h-5"/> Beranda
-               </Link>
-            </div>
           </div>
         </div>
-      </nav>
+      </header>
 
       {/* Hero Section */}
-      <header id="beranda" className="bg-emerald-900 text-white py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <header id="beranda" className="bg-green-900 text-white py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="inline-block bg-emerald-800 border border-emerald-600 text-emerald-100 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide mb-6">
+          <div className="inline-block bg-green-800 border border-green-600 text-green-100 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide mb-6">
             Era Baru Pendidikan Tinggi di Kabupaten Pinrang
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-            Membangun Generasi <span className="text-amber-500">Unggul</span> & <span className="text-amber-500">Berkeadilan</span>
+            Membangun Generasi <span className="text-yellow-500">Unggul</span> & <span className="text-yellow-500">Berkeadilan</span>
           </h1>
-          <p className="text-lg md:text-xl text-emerald-100 mb-10 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-green-100 mb-10 leading-relaxed max-w-3xl mx-auto">
             Institut Cokroaminoto Pinrang (ICP) adalah wujud evolusi pendidikan sejak 27 Juli 2022, menyatukan keunggulan STKIP dan STIH Cokroaminoto Pinrang menjadi satu institusi besar yang siap mencetak pendidik profesional dan praktisi hukum berintegritas.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="#transformasi" className="bg-white text-emerald-900 hover:bg-slate-100 px-8 py-3 rounded-lg font-bold text-lg transition-colors shadow-lg">
+            <a href="#transformasi" className="bg-white text-green-900 hover:bg-slate-100 px-8 py-3 rounded-lg font-bold text-lg transition-colors shadow-lg">
               Pelajari Sejarah Kami
             </a>
-            <a href="#akademik" className="bg-transparent border-2 border-emerald-400 text-emerald-50 hover:bg-emerald-800 px-8 py-3 rounded-lg font-bold text-lg transition-colors text-center">
+            <a href="#akademik" className="bg-transparent border-2 border-green-400 text-green-50 hover:bg-green-800 px-8 py-3 rounded-lg font-bold text-lg transition-colors text-center">
               Lihat Program Studi
             </a>
           </div>
@@ -144,7 +141,7 @@ export default function ProfilPage() {
       <section id="transformasi" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-emerald-900 mb-4">Transformasi & Sejarah Institusi</h2>
+            <h2 className="text-3xl font-bold text-green-900 mb-4">Transformasi & Sejarah Institusi</h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg">
               Memahami sejarah perjalanan historis peleburan dua sekolah tinggi kebanggaan masyarakat Kabupaten Pinrang, berada di bawah naungan Yayasan Pembina Pendidikan Cokroaminoto Pinrang.
             </p>
@@ -160,9 +157,9 @@ export default function ProfilPage() {
                 Pada tanggal <strong>27 Juli 2022</strong> (SK Kemendikbudristek RI No. 560/E/O/2022), kedua institusi ini resmi dilebur. Penggabungan ini menciptakan ruang lingkup akademik yang luas untuk mewujudkan visi besar menjadi Universitas Cokroaminoto Pinrang di masa depan.
               </p>
               
-              <div className="bg-emerald-50 p-6 rounded-xl border border-emerald-100">
-                <h4 className="font-bold text-emerald-800 mb-2">Visi Penggabungan</h4>
-                <p className="text-sm text-emerald-900 italic">"Menjadi institusi pendidikan yang unggul dan berdaya saing pada tingkat lokal dan regional pada tahun 2027, berbasis kearifan lokal Sulawesi Selatan."</p>
+              <div className="bg-green-50 p-6 rounded-xl border border-green-100">
+                <h4 className="font-bold text-green-800 mb-2">Visi Penggabungan</h4>
+                <p className="text-sm text-green-900 italic">"Menjadi institusi pendidikan yang unggul dan berdaya saing pada tingkat lokal dan regional pada tahun 2027, berbasis kearifan lokal Sulawesi Selatan."</p>
               </div>
             </div>
 
@@ -170,25 +167,25 @@ export default function ProfilPage() {
               <div className="absolute left-[25px] md:left-[41px] top-4 bottom-0 w-0.5 bg-slate-200 z-0"></div>
               
               <div className="relative z-10 flex items-start mb-10">
-                <div className="w-5 h-5 bg-emerald-600 rounded-full mt-1.5 mr-4 flex-shrink-0 shadow-[0_0_0_4px_rgba(5,150,105,0.1)]"></div>
+                <div className="w-5 h-5 bg-green-600 rounded-full mt-1.5 mr-4 flex-shrink-0 shadow-[0_0_0_4px_rgba(5,150,105,0.1)]"></div>
                 <div>
-                  <h4 className="text-lg font-bold text-emerald-900">Era Sekolah Tinggi (1986 - 2021)</h4>
+                  <h4 className="text-lg font-bold text-green-900">Era Sekolah Tinggi (1986 - 2021)</h4>
                   <p className="text-slate-600 mt-1 text-sm">Berdirinya STKIP (1986) dan STIH (2001) secara terpisah. Mengabdi puluhan tahun dalam mencetak lebih dari ribuan sarjana pendidikan dan sarjana hukum yang tersebar di seluruh Indonesia.</p>
                 </div>
               </div>
               
               <div className="relative z-10 flex items-start mb-10">
-                <div className="w-5 h-5 bg-amber-500 rounded-full mt-1.5 mr-4 flex-shrink-0 shadow-[0_0_0_4px_rgba(245,158,11,0.1)]"></div>
+                <div className="w-5 h-5 bg-yellow-500 rounded-full mt-1.5 mr-4 flex-shrink-0 shadow-[0_0_0_4px_rgba(245,158,11,0.1)]"></div>
                 <div>
-                  <h4 className="text-lg font-bold text-amber-600">Gagasan Penyatuan (Akhir 2021)</h4>
+                  <h4 className="text-lg font-bold text-yellow-600">Gagasan Penyatuan (Akhir 2021)</h4>
                   <p className="text-slate-600 mt-1 text-sm">Yayasan memprakarsai proses penggabungan untuk meningkatkan status akreditasi kelembagaan, menyatukan sumber daya, dan mempersiapkan pembukaan program pascasarjana.</p>
                 </div>
               </div>
               
               <div className="relative z-10 flex items-start">
-                <div className="w-6 h-6 bg-emerald-800 border-4 border-emerald-200 rounded-full mt-1 mr-3.5 flex-shrink-0"></div>
+                <div className="w-6 h-6 bg-green-800 border-4 border-green-200 rounded-full mt-1 mr-3.5 flex-shrink-0"></div>
                 <div>
-                  <h4 className="text-lg font-bold text-emerald-900">Lahirnya ICP (27 Juli 2022)</h4>
+                  <h4 className="text-lg font-bold text-green-900">Lahirnya ICP (27 Juli 2022)</h4>
                   <p className="text-slate-600 mt-1 text-sm">Berdasarkan SK Kemendikbudristek, STKIP dan STIH resmi berganti wujud menjadi Institut Cokroaminoto Pinrang. Diresmikan pada 4 Agustus 2022 di hadapan Bupati Pinrang dan LLDIKTI.</p>
                 </div>
               </div>
@@ -201,7 +198,7 @@ export default function ProfilPage() {
       <section id="akademik" className="py-20 bg-slate-50 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-emerald-900 mb-4">Struktur Akademik Terintegrasi</h2>
+            <h2 className="text-3xl font-bold text-green-900 mb-4">Struktur Akademik Terintegrasi</h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg">
               Institut Cokroaminoto Pinrang mengelola 8 program studi sarjana yang terbagi menjadi dua rumpun besar, mewarisi keunggulan akademik dari kedua institusi pendahulu.
             </p>
@@ -211,7 +208,7 @@ export default function ProfilPage() {
             <div className="flex flex-col sm:flex-row border-b border-slate-200">
               <button 
                 onClick={() => setActiveTab('fkip')} 
-                className={`flex-1 py-5 px-6 text-center focus:outline-none transition-all duration-300 ${activeTab === 'fkip' ? 'border-b-4 border-emerald-600 bg-emerald-50/50 text-emerald-800 font-bold' : 'border-b-4 border-transparent text-slate-600 hover:bg-slate-50'}`}
+                className={`flex-1 py-5 px-6 text-center focus:outline-none transition-all duration-300 ${activeTab === 'fkip' ? 'border-b-4 border-green-600 bg-green-50/50 text-green-800 font-bold' : 'border-b-4 border-transparent text-slate-600 hover:bg-slate-50'}`}
               >
                 <span className="block text-2xl mb-2">🎓</span>
                 Rumpun Kependidikan (FKIP)
@@ -219,7 +216,7 @@ export default function ProfilPage() {
               </button>
               <button 
                 onClick={() => setActiveTab('hukum')} 
-                className={`flex-1 py-5 px-6 text-center focus:outline-none transition-all duration-300 ${activeTab === 'hukum' ? 'border-b-4 border-emerald-600 bg-emerald-50/50 text-emerald-800 font-bold' : 'border-b-4 border-transparent text-slate-600 hover:bg-slate-50'}`}
+                className={`flex-1 py-5 px-6 text-center focus:outline-none transition-all duration-300 ${activeTab === 'hukum' ? 'border-b-4 border-green-600 bg-green-50/50 text-green-800 font-bold' : 'border-b-4 border-transparent text-slate-600 hover:bg-slate-50'}`}
               >
                 <span className="block text-2xl mb-2">⚖️</span>
                 Rumpun Hukum (FH)
@@ -231,7 +228,7 @@ export default function ProfilPage() {
               {/* Tab Content FKIP */}
               <div className={`transition-opacity duration-500 absolute inset-0 p-8 md:p-12 ${activeTab === 'fkip' ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-emerald-900 mb-3">Mencetak Pendidik Masa Depan</h3>
+                  <h3 className="text-2xl font-bold text-green-900 mb-3">Mencetak Pendidik Masa Depan</h3>
                   <p className="text-slate-600">Mewarisi pengalaman panjang dari STKIP, rumpun kependidikan menyelenggarakan pendidikan berkualitas yang adaptif terhadap teknologi (MBKM-aligned) dan berpusat pada perkembangan karakter.</p>
                 </div>
                 
@@ -248,7 +245,7 @@ export default function ProfilPage() {
                     <div key={idx} className="border border-slate-100 bg-slate-50 rounded-xl p-5 hover:shadow-md transition-shadow">
                       <h4 className="font-bold text-slate-800 text-md mb-2">{prodi.title}</h4>
                       <p className="text-xs text-slate-600 mb-3">{prodi.desc}</p>
-                      <span className="inline-block px-2 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full uppercase tracking-wider">Terakreditasi</span>
+                      <span className="inline-block px-2 py-1 bg-green-100 text-green-800 text-[10px] font-bold rounded-full uppercase tracking-wider">Terakreditasi</span>
                     </div>
                   ))}
                 </div>
@@ -257,17 +254,17 @@ export default function ProfilPage() {
               {/* Tab Content Hukum */}
               <div className={`transition-opacity duration-500 absolute inset-0 p-8 md:p-12 ${activeTab === 'hukum' ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}>
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-emerald-900 mb-3">Menegakkan Keadilan dan Kebenaran</h3>
+                  <h3 className="text-2xl font-bold text-green-900 mb-3">Menegakkan Keadilan dan Kebenaran</h3>
                   <p className="text-slate-600">Melanjutkan tradisi akademik STIH yang prestisius, program Ilmu Hukum berfokus pada analisis hukum kritis, komparatif, dan penyiapan profesi hukum andal.</p>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="border border-slate-100 bg-slate-50 rounded-xl p-6 hover:shadow-md transition-shadow flex items-start gap-4">
-                    <div className="w-14 h-14 bg-amber-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">⚖️</div>
+                    <div className="w-14 h-14 bg-yellow-100 rounded-lg flex items-center justify-center text-2xl flex-shrink-0">⚖️</div>
                     <div>
                       <h4 className="font-bold text-slate-800 text-xl mb-2">S1 Ilmu Hukum</h4>
                       <p className="text-sm text-slate-600 mb-4">Lulusan dipersiapkan menjadi advokat, hakim, jaksa, ASN, atau konsultan hukum. Menawarkan kelas eksekutif bagi profesional.</p>
-                      <span className="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">Akreditasi BAN-PT: Peringkat B</span>
+                      <span className="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-bold rounded-full">Akreditasi BAN-PT: Peringkat B</span>
                       
                       <h5 className="font-bold text-slate-700 text-sm mt-4 mb-2">Konsentrasi Tersedia:</h5>
                       <ul className="list-disc list-inside text-sm text-slate-600 space-y-1">
@@ -278,13 +275,13 @@ export default function ProfilPage() {
                     </div>
                   </div>
                   
-                  <div className="bg-emerald-900 rounded-xl p-8 text-white flex flex-col justify-center relative overflow-hidden">
+                  <div className="bg-green-900 rounded-xl p-8 text-white flex flex-col justify-center relative overflow-hidden">
                     <div className="absolute -right-4 -bottom-4 opacity-10 text-9xl">⚖️</div>
                     <h4 className="text-xl font-bold mb-4 relative z-10">Rencana Program Baru</h4>
-                    <p className="text-emerald-100 text-sm mb-4 relative z-10">Sebagai bagian dari visi penggabungan, ICP tengah mempersiapkan peluncuran program pascasarjana pertamanya:</p>
+                    <p className="text-green-100 text-sm mb-4 relative z-10">Sebagai bagian dari visi penggabungan, ICP tengah mempersiapkan peluncuran program pascasarjana pertamanya:</p>
                     <div className="bg-white/10 p-4 rounded-lg relative z-10 border border-white/20">
-                       <h5 className="font-bold text-amber-400">S2 Magister Ilmu Hukum</h5>
-                       <p className="text-xs text-emerald-50 mt-1">Status: Dalam proses persiapan paska-merger. Fokus pada riset hukum dan profesi advokat spesialis.</p>
+                       <h5 className="font-bold text-yellow-400">S2 Magister Ilmu Hukum</h5>
+                       <p className="text-xs text-green-50 mt-1">Status: Dalam proses persiapan paska-merger. Fokus pada riset hukum dan profesi advokat spesialis.</p>
                     </div>
                   </div>
                 </div>
@@ -298,7 +295,7 @@ export default function ProfilPage() {
       <section id="data" className="py-20 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-emerald-900 mb-4">Visualisasi Data & Prospek Kampus</h2>
+            <h2 className="text-3xl font-bold text-green-900 mb-4">Visualisasi Data & Prospek Kampus</h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg">
               Transparansi pertumbuhan paska-merger. Grafik di bawah menggambarkan kekuatan gabungan program studi dan tren animo pendaftar ke Institut Cokroaminoto Pinrang.
             </p>
@@ -323,22 +320,22 @@ export default function ProfilPage() {
           </div>
 
           {/* Kalkulator Biaya */}
-          <div className="mt-16 bg-gradient-to-br from-emerald-900 to-emerald-950 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-emerald-500/10 blur-3xl"></div>
+          <div className="mt-16 bg-gradient-to-br from-green-900 to-green-950 rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-green-500/10 blur-3xl"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
               <div>
-                <div className="text-amber-400 font-bold mb-2 uppercase tracking-wide text-sm">Fitur Interaktif</div>
+                <div className="text-yellow-400 font-bold mb-2 uppercase tracking-wide text-sm">Fitur Interaktif</div>
                 <h3 className="text-3xl font-bold mb-4">Kalkulator Estimasi Biaya</h3>
-                <p className="text-emerald-100 mb-6 leading-relaxed">
+                <p className="text-green-100 mb-6 leading-relaxed">
                   Kami berkomitmen pada transparansi. Gunakan kalkulator ini untuk memproyeksikan biaya awal semester pertama perkuliahan Anda.
                 </p>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-emerald-200 mb-1">Pilih Program Studi</label>
+                    <label className="block text-sm font-medium text-green-200 mb-1">Pilih Program Studi</label>
                     <select 
                       value={biayaProdi} 
                       onChange={(e) => setBiayaProdi(Number(e.target.value))}
-                      className="w-full bg-emerald-800/80 border border-emerald-700/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-colors"
+                      className="w-full bg-green-800/80 border border-green-700/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-colors"
                     >
                       <option value={2500000}>S1 Ilmu Hukum (Reguler)</option>
                       <option value={3000000}>S1 Ilmu Hukum (Kelas Eksekutif)</option>
@@ -346,11 +343,11 @@ export default function ProfilPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-emerald-200 mb-1">Jalur Pendaftaran / Beasiswa</label>
+                    <label className="block text-sm font-medium text-green-200 mb-1">Jalur Pendaftaran / Beasiswa</label>
                     <select 
                       value={potonganJalur} 
                       onChange={(e) => setPotonganJalur(Number(e.target.value))}
-                      className="w-full bg-emerald-800/80 border border-emerald-700/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500 transition-colors"
+                      className="w-full bg-green-800/80 border border-green-700/50 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-colors"
                     >
                       <option value={0}>Reguler (Biaya Standar)</option>
                       <option value={-500000}>Potongan Jalur Prestasi (-Rp 500.000)</option>
@@ -361,15 +358,15 @@ export default function ProfilPage() {
               </div>
               
               <div className="bg-white/5 backdrop-blur-md border border-white/10 text-white p-8 rounded-2xl text-center flex flex-col justify-center h-full min-h-[250px]">
-                <h4 className="text-emerald-200 font-medium mb-2">Total Estimasi Semester 1</h4>
+                <h4 className="text-green-200 font-medium mb-2">Total Estimasi Semester 1</h4>
                 <div className={`text-4xl md:text-5xl font-extrabold text-white mb-2 drop-shadow-md transition-opacity duration-300 ${isCalcAnimating ? 'opacity-0' : 'opacity-100'}`}>
                   {formatRupiah(totalBiaya)}
                 </div>
-                <p className="text-xs text-emerald-300/70 mt-4 leading-relaxed px-4">
+                <p className="text-xs text-green-300/70 mt-4 leading-relaxed px-4">
                   *Berdasarkan sistem Uang Kuliah Tunggal (UKT). Sumbangan Penyelenggaraan Pendidikan (SPP) dapat diangsur sesuai kebijakan kampus.
                 </p>
                 <div className="mt-6 pt-6 border-t border-white/10">
-                  <Link href="/register" className="inline-block bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg">
+                  <Link href="/register" className="inline-block bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-bold py-3 px-8 rounded-full transition-transform hover:scale-105 shadow-lg">
                     Daftar Sekarang
                   </Link>
                 </div>
@@ -380,9 +377,9 @@ export default function ProfilPage() {
       </section>
 
       {/* CTA Section */}
-      <section id="pmb" className="py-20 bg-emerald-50">
+      <section id="pmb" className="py-20 bg-green-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <span className="text-emerald-600 font-bold tracking-wider uppercase text-sm mb-2 block">Penerimaan Mahasiswa Baru</span>
+          <span className="text-green-600 font-bold tracking-wider uppercase text-sm mb-2 block">Penerimaan Mahasiswa Baru</span>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Bergabunglah dengan Era Baru Pendidikan di Pinrang</h2>
           <p className="text-lg text-slate-600 mb-10">Pendaftaran tahun akademik baru telah dibuka. Jadilah bagian dari sejarah Institut Cokroaminoto Pinrang.</p>
           
@@ -405,7 +402,7 @@ export default function ProfilPage() {
               </div>
             </div>
             
-            <Link href="/register" className="inline-block bg-emerald-700 hover:bg-emerald-800 text-white text-lg font-bold py-4 px-10 rounded-full transition-transform transform hover:scale-105 shadow-lg w-full sm:w-auto">
+            <Link href="/register" className="inline-block bg-green-700 hover:bg-green-800 text-white text-lg font-bold py-4 px-10 rounded-full transition-transform transform hover:scale-105 shadow-lg w-full sm:w-auto">
               Buka Portal Pendaftaran
             </Link>
           </div>
@@ -413,10 +410,52 @@ export default function ProfilPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-12 text-sm border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p>&copy; {new Date().getFullYear()} Institut Cokroaminoto Pinrang. Hak Cipta Dilindungi.</p>
-          <p className="mt-2 text-slate-500">Sistem Penerimaan Mahasiswa Baru Terpadu.</p>
+      <footer className="bg-slate-900 text-slate-400 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="col-span-1 md:col-span-2">
+            <Link href="/" className="flex items-center gap-2 mb-4 hover:opacity-80 transition cursor-pointer">
+              <Image src="/logo.png" alt="Logo ICP" width={32} height={32} className="object-contain brightness-0 invert" />
+              <span className="font-bold text-xl text-white">Institut Cokroaminoto Pinrang</span>
+            </Link>
+            <p className="mb-6 max-w-sm text-sm">
+              Menyelenggarakan pendidikan tinggi berkualitas untuk mencetak lulusan yang kompeten, berakhlak mulia, dan berdaya saing global.
+            </p>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-4">Kontak</h4>
+            <ul className="space-y-3 text-sm">
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
+                <span>Jl. Teuku Umar No. 36 Pinrang</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-slate-500 shrink-0 mt-0.5" />
+                <div className="flex flex-col">
+                  <span className="font-semibold text-slate-400">Prodi Hukum:</span>
+                  <span>0823-4357-3729 / 0852-5580-2466</span>
+                  <span className="font-semibold text-slate-400 mt-2">Prodi Pendidikan:</span>
+                  <span>0821-9502-7732 / 0812-5383-1207</span>
+                </div>
+              </li>
+              <li className="flex items-center gap-3 pt-2">
+                <MessageCircle className="w-5 h-5 text-slate-500 shrink-0" />
+                <span className="text-xs break-all">institutcokroaminotopinrang@gmail.com</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-white font-semibold mb-4">Tautan Cepat</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="/panduan" className="hover:text-green-400 transition">Panduan Pendaftaran</Link></li>
+              <li><Link href="/program-studi" className="hover:text-green-400 transition">Daftar Program Studi</Link></li>
+              <li><Link href="/login" className="hover:text-green-400 transition">Masuk Dashboard</Link></li>
+              <li><Link href="/register" className="hover:text-green-400 transition">Daftar Akun Baru</Link></li>
+              <li><Link href="/pengumuman" className="hover:text-green-400 transition">Cek Kelulusan</Link></li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-800 text-sm text-center text-slate-500">
+          &copy; {new Date().getFullYear()} Institut Cokroaminoto Pinrang. Hak Cipta Dilindungi Undang-Undang.
         </div>
       </footer>
     </div>
