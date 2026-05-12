@@ -47,7 +47,7 @@ export default function DashboardPage() {
             setRegistrationNumber(data.registrationNumber);
             if (data.progress) setProgress(data.progress);
             if (data.status) setStatus(data.status);
-          } else {
+          } else if (userData?.role !== 'admin') {
             // Self-healing: Jika dokumen pendaftar belum ada (karena error rules sebelumnya), buatkan otomatis
             const { setDoc } = await import("firebase/firestore");
             const newRegNum = `PMB${new Date().getFullYear()}${Math.floor(Math.random() * 1000).toString().padStart(3, '0')}`;

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Filter, Eye, MoreVertical } from "lucide-react";
+import { Search, Filter, Eye, Trash2 } from "lucide-react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
@@ -28,6 +28,19 @@ export default function AdminPendaftarPage() {
     };
     fetchApplicants();
   }, []);
+
+  const handleDelete = async (id: string, name: string) => {
+    if (confirm(`Apakah Anda yakin ingin menghapus data ${name}? Tindakan ini tidak dapat dibatalkan.`)) {
+      try {
+        const { deleteDoc, doc } = await import("firebase/firestore");
+        await deleteDoc(doc(db, "applicants", id));
+        setApplicants(prev => prev.filter(app => app.id !== id));
+      } catch (error) {
+        console.error("Error deleting document: ", error);
+        alert("Gagal menghapus data.");
+      }
+    }
+  };
 
   const getStatusBadge = (status: string) => {
     switch(status?.toLowerCase()) {
@@ -187,8 +200,12 @@ export default function AdminPendaftarPage() {
                         >
                           <Eye className="w-5 h-5" />
                         </Link>
-                        <button className="p-1.5 text-slate-400 hover:bg-slate-100 rounded-md transition">
-                          <MoreVertical className="w-5 h-5" />
+                        <button 
+                          onClick={() => handleDelete(peserta.id, peserta.biodata?.namaLengkap || peserta.registrationNumber)}
+                          className="p-1.5 text-red-500 hover:bg-red-50 rounded-md transition"
+                          title="Hapus Data"
+                        >
+                          <Trash2 className="w-5 h-5" />
                         </button>
                       </div>
                     </td>
