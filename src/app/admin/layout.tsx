@@ -48,6 +48,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Dashboard", icon: LayoutDashboard, href: "/admin" },
     { name: "Data Pendaftar", icon: Users, href: "/admin/pendaftar" },
     { name: "Scan QR Ujian", icon: Search, href: "/admin/scan" },
+    { name: "Pengaturan", icon: Settings, href: "/admin/settings" },
   ];
 
   if (loading || !userData || userData.role !== 'admin') {
