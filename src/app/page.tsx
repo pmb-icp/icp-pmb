@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, BookOpen, Calendar, CheckCircle, MapPin, Phone, MessageCircle, ChevronDown, Award, Clock, Wallet, HelpCircle } from "lucide-react";
+import FeeCalculator from "@/components/FeeCalculator";
 
 export default function Home() {
   return (
@@ -267,6 +268,9 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+          <FeeCalculator />
         </div>
       </section>
 
