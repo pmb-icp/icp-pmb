@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BookOpen, Calendar, CheckCircle, MapPin, Phone, MessageCircle, ChevronDown, Award, Clock, DollarSign, HelpCircle } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, CheckCircle, MapPin, Phone, MessageCircle, ChevronDown, Award, Clock, Wallet, HelpCircle } from "lucide-react";
 
 export default function Home() {
   return (
@@ -225,16 +225,35 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-slate-900 mb-4">Biaya Pendidikan</h2>
           <p className="text-slate-600 mb-12">Institut Cokroaminoto Pinrang menerapkan sistem Uang Kuliah Tunggal (UKT) yang terjangkau tanpa biaya gedung atau pungutan tersembunyi lainnya.</p>
           
-          <div className="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden max-w-2xl mx-auto">
-            <div className="bg-green-700 p-8 text-white">
-              <DollarSign className="w-12 h-12 mx-auto mb-4 opacity-80" />
-              <h3 className="text-2xl font-bold mb-2">Uang Kuliah Tunggal (UKT)</h3>
-              <div className="flex justify-center items-baseline gap-2">
-                <span className="text-4xl font-extrabold">Rp 2.500.000</span>
-                <span className="text-green-200">/ semester</span>
+          <div className="bg-white rounded-[2rem] shadow-xl border border-slate-200 p-2 sm:p-3 max-w-2xl mx-auto">
+            
+            {/* Premium Card UI */}
+            <div className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-green-950 rounded-3xl p-8 sm:p-10 text-white overflow-hidden shadow-inner">
+              {/* Decorative shapes for the card */}
+              <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white/5 blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 rounded-full bg-green-500/20 blur-2xl"></div>
+              
+              <div className="relative z-10 flex justify-between items-start mb-16">
+                <div className="bg-white/10 p-3 rounded-2xl backdrop-blur-sm border border-white/10">
+                  <Wallet className="w-8 h-8 text-green-400" />
+                </div>
+                <div className="text-right">
+                  <span className="inline-block px-3 py-1 bg-green-500/20 border border-green-500/30 text-green-300 text-xs font-bold uppercase tracking-wider rounded-full">
+                    Sistem Terjangkau
+                  </span>
+                </div>
+              </div>
+              
+              <div className="relative z-10 text-left">
+                <p className="text-sm sm:text-base font-medium text-slate-400 mb-1">Uang Kuliah Tunggal (UKT)</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white drop-shadow-md">Rp 2.500.000</span>
+                  <span className="text-slate-400 font-medium text-lg">/ sem</span>
+                </div>
               </div>
             </div>
-            <div className="p-8">
+
+            <div className="p-6 sm:p-8">
               <ul className="space-y-4 text-left">
                 <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Sumbangan Penyelenggaraan Pendidikan (SPP) bisa diangsur.</li>
                 <li className="flex items-center gap-3 text-slate-700"><CheckCircle className="w-5 h-5 text-green-500 shrink-0" /> Tersedia beasiswa KIP Kuliah bagi mahasiswa yang tidak mampu.</li>
